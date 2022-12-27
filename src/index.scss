@@ -2,17 +2,21 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
 :root {
+    --base: #FFFFFF;
     --bg: #{g.$primaryLight};
     --text-color: #{g.$primaryDark};
     --neutral-grey: #8F8F8F;
     --accent-green: #448241;
     --accent-secondary-green: #72A86F;
     --accent-red: #CD4B4B;
+    --box-shadow-colour: rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] {
+    --base: #141414;
     --bg: #{g.$primaryDark};
     --text-color: #{g.$primaryLight};
     --neutral-grey: #BABABA;
@@ -25,12 +29,12 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Ubuntu', 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--bg);
     transition: background-color 0.3s ease;
     button, input, span {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Ubuntu', 'Roboto', sans-serif;
     }
 }
