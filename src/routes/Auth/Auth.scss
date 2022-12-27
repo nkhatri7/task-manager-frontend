@@ -1,0 +1,11 @@
+@use '../../global' as g;
+
+.auth-main {
+    @include g.flex-column-centre();
+    > .auth-heading {
+        font-family: 'Lobster', 'Roboto', 'Oxygen', sans-serif;
+        font-size: 44px;
+        color: var(--text-color);
+        margin: 44px 0;
+    }
+}
