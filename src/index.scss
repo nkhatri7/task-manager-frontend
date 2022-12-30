@@ -6,20 +6,26 @@
 
 :root {
     --base: #FFFFFF;
-    --bg: #{g.$primaryLight};
-    --text-color: #{g.$primaryDark};
+    --bg: #FAFAFA;
+    --text-color: #272727;
     --neutral-grey: #8F8F8F;
-    --accent-green: #448241;
+    --grey-text: #555555;
+    --accent-green: rgb(68, 130, 65);
+    --accent-green-reduced-opacity: rgba(68, 130, 65, 0.5);
     --accent-secondary-green: #72A86F;
     --accent-red: #CD4B4B;
+    --green-btn-text: #FAFAFA;
     --box-shadow-colour: rgba(0, 0, 0, 0.3);
+    --component-bg: #D0D0D0;
 }
 
 [data-theme="dark"] {
     --base: #141414;
-    --bg: #{g.$primaryDark};
-    --text-color: #{g.$primaryLight};
+    --bg: #272727;
+    --text-color: #FAFAFA;
     --neutral-grey: #BABABA;
+    --grey-text: #BABABA;
+    --component-bg: #141414;
 }
 
 *, ::before, ::after {

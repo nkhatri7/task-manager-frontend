@@ -1,0 +1,116 @@
+@use '../../global' as g;
+
+.homepage {
+    width: 100vw;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    > header {
+        width: 100%;
+        @include g.space-between();
+        > .taskr-logo-container {
+            text-decoration: none;
+            .taskr-logo {
+                font-family: 'Lobster', 'Ubuntu', 'Roboto', sans-serif;
+                font-size: 24px;
+                color: var(--text-color);
+            }
+        }
+        > .menu-container {
+            position: relative;
+            > .menu-btn {
+                height: 38px;
+                width: 38px;
+                border: none;
+                border-radius: 50%;
+                font-weight: 500;
+                font-size: 18px;
+                background-color: var(--component-bg);
+                color: var(--text-color);
+                @include g.flex-centre();
+                cursor: pointer;
+            }
+            > .menu {
+                position: absolute;
+                right: 0;
+                top: 45px;
+                @include g.flex-column();
+                width: 180px;
+                list-style: none;
+                background-color: var(--component-bg);
+                border-radius: 10px;
+                z-index: 5;
+                > .menu-item {
+                    @include g.flex();
+                    width: 100%;
+                    padding: 15px 10px;
+                    cursor: pointer;
+                    &:not(:last-child) {
+                        border-bottom: 1px solid var(--neutral-grey);
+                    }
+                    .menu-item-icon {
+                        height: 18px;
+                        stroke: var(--grey-text);
+                        margin-right: 10px;
+                        &.menu-item-icon-red {
+                            stroke: var(--accent-red);
+                        }
+                    }
+                    .menu-item-text {
+                        color: var(--grey-text);
+                        font-size: 14px;
+                        &.menu-item-text-red {
+                            color: var(--accent-red);
+                        }
+                    }
+                }
+                .menu-link {
+                    @include g.flex();
+                    width: 100%;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    > main {
+        @include g.flex-column-centre();
+        margin-top: 30px;
+        > .welcome-message, > .tasks-message {
+            color: var(--text-color);
+        }
+        > .tasks-message {
+            color: var(--grey-text);
+            margin-top: 15px;
+        }
+        > .tasks-filters-container {
+            margin: 15px 0 20px 0;
+            @include g.flex-centre();
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--component-bg);
+            border-radius: 100px;
+            > .tasks-filter {
+                padding: 10px 0;
+                flex: 1;
+                text-align: center;
+                color: var(--text-color);
+                font-size: 13px;
+                border-radius: 100px;
+                cursor: pointer;
+                &.active-tasks-filter {
+                    background-color: var(--accent-green);
+                    color: var(--green-btn-text);
+                    font-weight: 700;
+                }
+            }
+        }
+        > .tasks-container {
+            width: 100%;
+            max-width: 500px;
+            > .no-tasks-msg {
+                color: var(--text-color);
+                text-align: center;
+            }
+        }
+    }
+}

@@ -46,6 +46,7 @@
                     border-radius: 5px;
                     background-color: var(--bg);
                     border: 1px solid var(--neutral-grey);
+                    font-size: 16px;
                     color: var(--text-color);
                     caret-color: var(--text-color);
                     @media screen and (min-width: 500px) {
@@ -60,7 +61,8 @@
                     &.auth-input-error {
                         border: 1px solid var(--accent-red);
                         &:focus {
-                            outline: 1px solid var(--accent-red) !important;
+                            outline: none !important;
+                            box-shadow: 0 0 0 1px var(--accent-red) !important;
                         }
                     }
                     // REMOVING AUTOILL COLOURS
@@ -76,7 +78,8 @@
                     }
                 }
                 .auth-input:not(.auth-input-error):focus {
-                    outline: 1px solid var(--accent-green) !important;
+                    outline: none !important;
+                    box-shadow: 0 0 0 1px var(--accent-green) !important;
                     border: 1px solid var(--accent-green) !important;
                 }
                 .auth-input:focus + .auth-input-label, .auth-input-label[data-input-filled="true"] {
@@ -134,11 +137,11 @@
         }
         > .auth-submit-btn {
             width: 100%;
-            padding: 15px 0;
+            height: 50px;
             border: none;
             border-radius: 10px;
             background-color: var(--accent-green);
-            color: g.$primaryLight;
+            color: var(--green-btn-text);
             font-size: 18px;
             font-weight: 500;
             transition: opacity 0.3s ease;

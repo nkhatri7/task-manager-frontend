@@ -1,10 +1,10 @@
-// DARK THEME
-$primaryDark: #272727;
-
-// LIGHT THEME
-$primaryLight: #FAFAFA;
-
 // MIXINS
+@mixin flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 @mixin flex-centre {
     display: flex;
     justify-content: center;
@@ -22,5 +22,11 @@ $primaryLight: #FAFAFA;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
+}
+
+@mixin space-between {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
