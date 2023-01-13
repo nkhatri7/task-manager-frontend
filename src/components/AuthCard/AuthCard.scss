@@ -68,13 +68,16 @@
                     // REMOVING AUTOILL COLOURS
                     &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus {
                         font-family: 'Roboto', sans-serif;
-                        border: 1px solid var(--accent-green);
+                        
                         -webkit-text-fill-color: var(--text-color);
                         -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset;
                         transition: background-color 5000s ease-in-out 0s;
                         @media screen and (min-width: 500px) {
                             -webkit-box-shadow: 0 0 0px 1000px var(--base) inset;
                         }
+                    }
+                    &:-webkit-autofill {
+                        border: 1px solid var(--neutral-grey);
                     }
                 }
                 .auth-input:not(.auth-input-error):focus {
@@ -115,6 +118,7 @@
                     top: 50%;
                     right: 20px;
                     transform: translateY(-50%);
+                    cursor: pointer;
                     > svg {
                         height: 20px;
                         width: 20px;
@@ -146,6 +150,7 @@
             font-weight: 500;
             transition: opacity 0.3s ease;
             margin: 10px 0 20px 0;
+            cursor: pointer;
             &:disabled {
                 opacity: 0.5;
             }

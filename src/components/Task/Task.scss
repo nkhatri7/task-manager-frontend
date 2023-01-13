@@ -1,13 +1,22 @@
 @use '../../global' as g;
 
+@keyframes task-action-btn-opacity {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
 .task {
-    @include g.flex();
+    @include g.space-between();
     width: 100%;
     padding: 15px;
     background-color: var(--component-bg);
     border-radius: 10px;
+    min-height: 55px;
     cursor: pointer;
-    > .checkbox-container {
+    .task-section {
+        @include g.flex();
+    }
+    .checkbox-container {
         margin-right: 15px;
         position: relative;
         height: 20px;
@@ -59,7 +68,33 @@
             }
         }
     }
-    > .task-text {
+    .task-text {
         color: var(--text-color);
+    }
+    .task-btn {
+        height: 24px;
+        width: 24px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: none;
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+        > .task-btn-icon {
+            height: 24px;
+            width: 24px;
+            stroke: var(--grey-text);
+            &.task-btn-icon-red {
+                stroke: var(--accent-red);
+            }
+        }
+    }
+
+    @media screen and (min-width: 1000px) {
+        &:hover .task-btn {
+            display: block;
+            animation: task-action-btn-opacity 0.3s;
+        }
     }
 }

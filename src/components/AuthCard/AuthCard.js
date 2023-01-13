@@ -8,7 +8,7 @@ import './AuthCard.scss';
 const SIGN_IN = 'Sign In';
 const REGISTRATION = 'Registration';
 
-const AuthCard = () => {
+const AuthCard = ({ updateUser }) => {
     const [authType, setAuthType] = useState(SIGN_IN);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -209,6 +209,7 @@ const AuthCard = () => {
             removeError(passwordInput, passwordErrorMsg);
             // Update user ID in local storage
             localStorage.setItem('taskr-user', res.data._id);
+            updateUser(res.data._id);
             // Go to home page
             navigate('/');
         }

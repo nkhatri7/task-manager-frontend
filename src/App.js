@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import './App.scss';
 import Auth from './routes/Auth/Auth';
 import Home from './routes/Home/Home';
+import useDetectTheme from './hooks/useDetectTheme';
+import './App.scss';
 
 const App = () => {
     const [user, setUser] = useState(null);
+    useDetectTheme();
 
     useEffect(() => {
         const userId = localStorage.getItem('taskr-user');
@@ -25,11 +27,19 @@ const App = () => {
             .catch((err) => console.log(err));
     };
 
+    /**
+     * Removes the user ID from local storage and resets the program's user state.
+     */
+    const signOutUser = () => {
+        localStorage.removeItem('taskr-user');
+        setUser(null);
+    };
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home user={user} />} />
-                <Route path='/auth' element={<Auth user={user} />} />
+                <Route path='/' element={<Home user={user} signOutUser={signOutUser} />} />
+                <Route path='/auth' element={<Auth user={user} updateUser={getActiveUser} />} />
             </Routes>
         </BrowserRouter>
     );

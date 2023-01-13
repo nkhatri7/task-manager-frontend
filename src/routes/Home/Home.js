@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import useDetectTheme from '../../hooks/useDetectTheme';
 import { ReactComponent as ProfileIcon } from '../../assets/user.svg';
 import { ReactComponent as PasswordIcon } from '../../assets/lock.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/sign-out.svg';
-import './Home.scss';
 import Task from '../../components/Task/Task';
+import './Home.scss';
 
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
 const NO_FILTER = 'No Filter';
 
-const Home = ({ user }) => {
+const Home = ({ user, signOutUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
     const [isMenuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
-    useDetectTheme();
 
     useEffect(() => {
         if (user) {
@@ -141,7 +139,7 @@ const Home = ({ user }) => {
                                     <p className="menu-item-text">Change Password</p>
                                 </Link>
                             </li>
-                            <li className="menu-item">
+                            <li className="menu-item" onClick={signOutUser}>
                                 <SignOutIcon />
                                 <p className="menu-item-text menu-item-text-red">Sign Out</p>
                             </li>
@@ -154,21 +152,13 @@ const Home = ({ user }) => {
                 <h2 className="welcome-message">{user ? getWelcomeMessage() : ''}</h2>
                 <p className="tasks-message">Here's what you have going on:</p>
                 <div className="tasks-filters-container">
-                    <div 
-                        className="tasks-filter" 
-                        data-filter={NO_FILTER} 
-                        onClick={handleTasksFilterChange}
-                    >All</div>
-                    <div 
-                        className="tasks-filter active-tasks-filter" 
+                    <div className="tasks-filter" data-filter={NO_FILTER} onClick={handleTasksFilterChange}>All</div>
+                    <div className="tasks-filter active-tasks-filter" 
                         data-filter={UNCOMPLETED}
-                        onClick={handleTasksFilterChange}
-                    >Uncompleted</div>
-                    <div 
-                        className="tasks-filter" 
+                        onClick={handleTasksFilterChange}>Uncompleted</div>
+                    <div className="tasks-filter" 
                         data-filter={COMPLETED}
-                        onClick={handleTasksFilterChange}
-                    >Completed</div>
+                        onClick={handleTasksFilterChange}>Completed</div>
                 </div>
                 <div className="tasks-container">
                     {filteredTasks.length > 0 ? taskItems : 
