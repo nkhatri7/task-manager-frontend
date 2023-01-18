@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { ReactComponent as ProfileIcon } from '../../assets/user.svg';
-import { ReactComponent as PasswordIcon } from '../../assets/lock.svg';
-import { ReactComponent as SignOutIcon } from '../../assets/sign-out.svg';
-import Task from '../../components/Task/Task';
 import './Home.scss';
+
+import Task from '../../components/Task/Task';
+import Menu from '../../components/Menu/Menu';
 
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
@@ -14,7 +13,6 @@ const NO_FILTER = 'No Filter';
 const Home = ({ user, signOutUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
-    const [isMenuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -59,22 +57,6 @@ const Home = ({ user, signOutUser }) => {
                 filter.classList.remove('active-tasks-filter');
             }
         });
-    };
-
-    /**
-     * Extracts the first character from the user's name.
-     * @returns {String} The first character from the user's name.
-     */
-    const getOptionsButtonText = () => {
-        const name = user.name;
-        return name.charAt(0);
-    };
-
-    /**
-     * Toggles the open state of the menu.
-     */
-    const toggleMenuOpen = () => {
-        setMenuOpen(prev => !prev);
     };
 
     /**
@@ -123,30 +105,7 @@ const Home = ({ user, signOutUser }) => {
                 <Link to='/' className='taskr-logo-container'>
                     <h1 className="taskr-logo">Taskr</h1>
                 </Link>
-                <div className="menu-container">
-                    <button className="menu-btn" onClick={toggleMenuOpen}>{user ? getOptionsButtonText() : ''}</button>
-                    {isMenuOpen ? 
-                        <ul className="menu">
-                            <li className="menu-item">
-                                <Link to='/profile' className='menu-link'>
-                                    <ProfileIcon />
-                                    <p className="menu-item-text">View Profile</p>
-                                </Link>
-                            </li>
-                            <li className="menu-item">
-                                <Link to='/change-password' className='menu-link'>
-                                    <PasswordIcon />
-                                    <p className="menu-item-text">Change Password</p>
-                                </Link>
-                            </li>
-                            <li className="menu-item" onClick={signOutUser}>
-                                <SignOutIcon />
-                                <p className="menu-item-text menu-item-text-red">Sign Out</p>
-                            </li>
-                        </ul>
-                        : null
-                    }
-                </div>
+                <Menu user={user} signOutUser={signOutUser} />
             </header>
             <main>
                 <h2 className="welcome-message">{user ? getWelcomeMessage() : ''}</h2>

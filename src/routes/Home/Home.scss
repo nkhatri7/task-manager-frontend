@@ -16,61 +16,6 @@
                 color: var(--text-color);
             }
         }
-        > .menu-container {
-            position: relative;
-            > .menu-btn {
-                height: 38px;
-                width: 38px;
-                border: none;
-                border-radius: 50%;
-                font-weight: 500;
-                font-size: 18px;
-                background-color: var(--component-bg);
-                color: var(--text-color);
-                @include g.flex-centre();
-                cursor: pointer;
-            }
-            > .menu {
-                position: absolute;
-                right: 0;
-                top: 45px;
-                @include g.flex-column();
-                width: 180px;
-                list-style: none;
-                background-color: var(--component-bg);
-                border-radius: 10px;
-                z-index: 5;
-                > .menu-item {
-                    @include g.flex();
-                    width: 100%;
-                    padding: 15px 10px;
-                    cursor: pointer;
-                    &:not(:last-child) {
-                        border-bottom: 1px solid var(--neutral-grey);
-                    }
-                    .menu-item-icon {
-                        height: 18px;
-                        stroke: var(--grey-text);
-                        margin-right: 10px;
-                        &.menu-item-icon-red {
-                            stroke: var(--accent-red);
-                        }
-                    }
-                    .menu-item-text {
-                        color: var(--grey-text);
-                        font-size: 14px;
-                        &.menu-item-text-red {
-                            color: var(--accent-red);
-                        }
-                    }
-                }
-                .menu-link {
-                    @include g.flex();
-                    width: 100%;
-                    text-decoration: none;
-                }
-            }
-        }
     }
     > main {
         @include g.flex-column-centre();
