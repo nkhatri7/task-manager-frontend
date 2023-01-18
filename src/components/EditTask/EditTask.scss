@@ -1,0 +1,67 @@
+@use '../../global' as g;
+
+.edit-task {
+    @include g.flex-column();
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    background-color: var(--component-bg);
+    border-radius: 10px;
+    > .edit-task-data-container {
+        width: 100%;
+        border: 1px solid var(--neutral-grey);
+        border-radius: 10px;
+        @include g.flex-column();
+        padding: 10px;
+        > .edit-task-text-input {
+            width: 100%;
+            background-color: transparent;
+            color: var(--text-color);
+            border: none;
+            font-size: 16px;
+            resize: none;
+            &:focus {
+                outline: none !important;
+            }
+        }
+        > .edit-task-datetime-container {
+            @include g.flex();
+            margin-top: 10px;
+        }
+    }
+    > .edit-task-action-btns {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 10px;
+        > .edit-task-action-btn {
+            padding: 8px 0;
+            width: 70px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            &.edit-task-cancel-btn {
+                background-color: var(--grey-btn);
+            }
+            &.edit-task-save-btn {
+                background-color: var(--accent-green);
+                color: white;
+                margin-left: 10px;
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+            @media screen and (min-width: 1440px) {
+                &.edit-task-cancel-btn:hover {
+                    background-color: #a3a3a3;
+                }
+                &.edit-task-save-btn:not(:disabled):hover {
+                    background-color: var(--accent-green-hover);
+                }
+            }
+        }
+    }
+}

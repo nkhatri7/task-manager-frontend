@@ -10,7 +10,9 @@
     --text-color: #272727;
     --neutral-grey: #8F8F8F;
     --grey-text: #555555;
-    --accent-green: rgb(68, 130, 65);
+    --grey-btn: #B3B3B3;
+    --accent-green: #448241;
+    --accent-green-hover: #376B34;
     --accent-green-reduced-opacity: rgba(68, 130, 65, 0.5);
     --accent-secondary-green: #72A86F;
     --accent-red: #CD4B4B;
@@ -40,7 +42,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--bg);
     transition: background-color 0.3s ease;
-    button, input, span {
+    button, input, span, textarea {
         font-family: 'Ubuntu', 'Roboto', sans-serif;
     }
 }
