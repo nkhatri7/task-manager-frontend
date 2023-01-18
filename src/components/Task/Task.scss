@@ -5,6 +5,10 @@
     to { opacity: 1 }
 }
 
+.task-container {
+    width: 100%;
+}
+
 .task {
     @include g.space-between();
     width: 100%;
@@ -91,7 +95,7 @@
         }
     }
 
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 1440px) {
         &:hover .task-btn {
             display: block;
             animation: task-action-btn-opacity 0.3s;

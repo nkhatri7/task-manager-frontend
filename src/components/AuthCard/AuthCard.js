@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ReactComponent as EyeOpenIcon } from '../../assets/eye-open.svg';
-import { ReactComponent as EyeClosedIcon } from '../../assets/eye-closed.svg';
 import './AuthCard.scss';
+
+import AuthInput from '../AuthInput/AuthInput';
+import PasswordInput from '../PasswordInput/PasswordInput';
 
 const SIGN_IN = 'Sign In';
 const REGISTRATION = 'Registration';
@@ -13,7 +14,6 @@ const AuthCard = ({ updateUser }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isPasswordVisibile, setPasswordVisible] = useState(false);
     const [isFormFilled, setFormFilled] = useState(false);
 
     const nameInput = useRef(null);
@@ -23,7 +23,6 @@ const AuthCard = ({ updateUser }) => {
     const emailErrorMsg = useRef(null);
     const passwordInput = useRef(null);
     const passwordLabel = useRef(null);
-    const passwordVisibilityToggle = useRef(null);
     const passwordErrorMsg = useRef(null);
 
     const navigate = useNavigate();
@@ -44,20 +43,12 @@ const AuthCard = ({ updateUser }) => {
         }
     }, [authType, name, email, password]);
 
-    useEffect(() => {
-        if (password.trim() === '') {
-            passwordVisibilityToggle.current.classList.add('password-visibility-toggle-hidden');
-        } else {
-            passwordVisibilityToggle.current.classList.remove('password-visibility-toggle-hidden');
-        }
-    }, [password]);
-
     /**
      * Updates the name value.
      * @param {Event} e The event that triggered this function
      */
     const handleNameChange = (e) => {
-        setName(e.target.value.trim());
+        setName(e.target.value);
         updateLabelStyling(nameLabel, e.target.value.trim() === '');
     };
 
@@ -80,19 +71,6 @@ const AuthCard = ({ updateUser }) => {
     };
 
     /**
-     * Toggles the password visibility
-     */
-    const handlePasswordVisibilityToggle = () => {
-        if (isPasswordVisibile) {
-            setPasswordVisible(false);
-            passwordInput.current.type = 'password';
-        } else {
-            setPasswordVisible(true);
-            passwordInput.current.type = 'text';
-        }
-    };
-
-    /**
      * Updates an input's label styling based on whether it is empty or not.
      * @param {React.MutableRefObject<Element>} labelRef The ref variable linked to the input's label
      * @param {boolean} isInputEmpty Whether or not the input field is empty
@@ -109,7 +87,6 @@ const AuthCard = ({ updateUser }) => {
         setName('');
         setEmail('');
         setPassword('');
-        setPasswordVisible(false);
         // Reset styling
         passwordInput.current.type = 'password';
         updateLabelStyling(emailLabel, true);
@@ -128,7 +105,7 @@ const AuthCard = ({ updateUser }) => {
 
     /**
      * Checks whether email and password are valid and handles the sign in if they are valid.
-     * @param {Event} e The event that triggered this function
+     * @param {Event} e Form submission event
      */
     const handleSignInRequest = (e) => {
         e.preventDefault();
@@ -164,14 +141,14 @@ const AuthCard = ({ updateUser }) => {
 
     /**
      * Checks whether name, email and password are valid and handles the user registration if they are valid.
-     * @param {Event} e The event that triggered this function
+     * @param {Event} e Form submission event
      */
     const handleRegistrationRequest = (e) => {
         e.preventDefault();
         const isInputValid = validateEmail() && validatePassword();
         if (isInputValid) {
             const data = {
-                name: name,
+                name: name.trim(),
                 email: email,
                 password: password,
             };
@@ -271,77 +248,28 @@ const AuthCard = ({ updateUser }) => {
 
     return (
         <section className='auth-card'>
-            <form 
-                onSubmit={authType === SIGN_IN ? handleSignInRequest : handleRegistrationRequest} 
-                className="auth-form"
-            >
+            <form onSubmit={authType === SIGN_IN ? handleSignInRequest : handleRegistrationRequest} 
+                className="auth-form">
                 <h2 className='auth-form-heading'>{authType === SIGN_IN ? 'Sign In' : 'Create Account'}</h2>
                 {authType === REGISTRATION ? 
                     <div className="auth-field">
-                        <div className="auth-input-container">
-                            <input 
-                                type="name" 
-                                name="name" 
-                                id="name" 
-                                placeholder='Name' 
-                                value={name}
-                                onChange={handleNameChange}
-                                className="auth-input" 
-                                ref={nameInput}
-                            />
-                            <label htmlFor="name" data-input-filled="false" className='auth-input-label' 
-                                ref={nameLabel}>Name</label>
-                        </div>
+                        <AuthInput type='name' inputId='name' value={name} onChange={handleNameChange} label='Name'
+                            inputRef={nameInput} labelRef={nameLabel} />
                     </div>
                     : null
                 }
                 <div className="auth-field">
-                    <div className="auth-input-container">
-                        <input 
-                            type="email" 
-                            name="email" 
-                            id="email" 
-                            placeholder='Email Address' 
-                            value={email}
-                            onChange={handleEmailChange}
-                            className="auth-input" 
-                            ref={emailInput}
-                        />
-                        <label htmlFor="email" data-input-filled="false" className='auth-input-label' 
-                            ref={emailLabel}>Email Address</label>
-                    </div>
+                    <AuthInput type='email' inputId='email' value={email} onChange={handleEmailChange} 
+                        label='Email Address' inputRef={emailInput} labelRef={emailLabel} />
                     <span className="auth-input-error-msg" ref={emailErrorMsg}></span>
                 </div>
                 <div className="auth-field">
-                    <div className="auth-input-container">
-                        <input 
-                            type="password" 
-                            name="password" 
-                            id="password" 
-                            placeholder='Password' 
-                            value={password}
-                            onChange={handlePasswordChange}
-                            className='auth-input password-input' 
-                            ref={passwordInput}
-                        />
-                        <label htmlFor="password" data-input-filled="false" className='auth-input-label'
-                            ref={passwordLabel}>Password</label>
-                        <div 
-                            className="password-visibility-toggle password-visibility-toggle-hidden" 
-                            ref={passwordVisibilityToggle} 
-                            onClick={handlePasswordVisibilityToggle}
-                        >
-                            {isPasswordVisibile ? <EyeOpenIcon /> : <EyeClosedIcon />}
-                        </div>
-                    </div>
+                    <PasswordInput value={password} onChange={handlePasswordChange} inputRef={passwordInput}
+                        labelRef={passwordLabel} />
                     <span className="auth-input-error-msg" ref={passwordErrorMsg}></span>
                 </div>
-                <input
-                    type="submit" 
-                    value={authType === SIGN_IN ? 'Sign In' : 'Create Account'} 
-                    className="auth-submit-btn" 
-                    disabled={!isFormFilled} 
-                />
+                <input type="submit" value={authType === SIGN_IN ? 'Sign In' : 'Create Account'} 
+                    className="auth-submit-btn" disabled={!isFormFilled} />
                 <p className="switch-auth-type-prompt" onClick={handleAuthTypeToggle}>
                     {authType === SIGN_IN ? "Don't have an account? Sign up." 
                         : "Already have an account? Sign In."}
