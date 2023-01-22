@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import './Task.scss';
 
 import EditTask from '../EditTask/EditTask';
@@ -11,8 +12,15 @@ import { displayDueDate, checkIfTaskIsOverdue } from '../../utils/date.utils';
 const Task = ({ task, updateUser }) => {
     const [editMode, setEditMode] = useState(false);
 
+    const completedCheckbox = useRef(null);
     const calendarIcon = useRef(null);
     const dueDateText = useRef(null);
+
+    useEffect(() => {
+        if (completedCheckbox && task.completed) {
+            completedCheckbox.current.checked = true;
+        }
+    }, [completedCheckbox, task.completed]);
 
     useEffect(() => {
         if (calendarIcon && dueDateText && task.dueDate !== '') {
@@ -26,6 +34,20 @@ const Task = ({ task, updateUser }) => {
             }
         }
     }, [calendarIcon, dueDateText, task.dueDate]);
+
+    /**
+     * Updates the completed property of the task.
+     * @param {Event} e The event of the user ticking or unticking the completed
+     * checkbox
+     */
+    const handleCompletedChange = (e) => {
+        const data = {
+            completed: e.target.checked,
+        };
+        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
+            .then(res => updateUser(task.userId))
+            .catch(err => console.log(err));
+    };
 
     /**
      * Prevents the task modal from being opened when the user clicks on the 
@@ -57,7 +79,8 @@ const Task = ({ task, updateUser }) => {
                     <div className="task-row task-row-top">
                         <section className="task-section">
                             <div className="checkbox-container" onClick={preventTaskModalDisplay}>
-                                <input type="checkbox" name="task-completed-checkbox" id="task-completed-checkbox" />
+                                <input type="checkbox" name="task-completed-checkbox" id="task-completed-checkbox"
+                                    onChange={handleCompletedChange} ref={completedCheckbox} />
                                 <label htmlFor="task-completed-checkbox"></label>
                             </div>
                             <p className="task-text">{task.text}</p>
