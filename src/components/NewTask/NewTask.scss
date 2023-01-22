@@ -2,7 +2,7 @@
 
 .new-task-container {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin-bottom: 15px;
     .new-task {
         @include g.flex();

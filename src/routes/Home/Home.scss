@@ -31,7 +31,7 @@
             margin: 30px 0 20px 0;
             @include g.flex-centre();
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             background-color: var(--component-bg);
             border-radius: 10px;
             > .tasks-filter {
@@ -48,13 +48,13 @@
                     font-weight: 700;
                 }
                 @media screen and (min-width: 1440px) {
-                    font-size: 14px;
+                    font-size: 15px;
                 }
             }
         }
         > .tasks-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             > .no-tasks-msg {
                 color: var(--text-color);
                 text-align: center;

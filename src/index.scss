@@ -16,10 +16,12 @@
     --accent-green-reduced-opacity: rgba(68, 130, 65, 0.5);
     --accent-secondary-green: #72A86F;
     --accent-red: #CD4B4B;
+    --accent-red-hover: #AF3434;
     --green-btn-text: #FAFAFA;
     --box-shadow-colour: rgba(0, 0, 0, 0.3);
     --component-bg: #E4E4E4;
     --calendar-bg: #FFFFFF;
+    --modal-backdrop: rgba(0, 0, 0, 0.7);
 }
 
 [data-theme="dark"] {
@@ -30,6 +32,7 @@
     --grey-text: #BABABA;
     --component-bg: #141414;
     --calendar-bg: #303030;
+    --modal-backdrop: rgba(255, 255, 255, 0.3);
 }
 
 *, ::before, ::after {

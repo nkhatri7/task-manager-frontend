@@ -119,7 +119,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
                         Completed
                     </div>
                 </div>
-                <NewTask updateUser={updateUser} />
+                {tasksFilter === COMPLETED ? null : <NewTask updateUser={updateUser} />}
                 <div className="tasks-container">
                     {filteredTasks.length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
                 </div>

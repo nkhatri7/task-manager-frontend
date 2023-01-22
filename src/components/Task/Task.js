@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Task.scss';
 
 import EditTask from '../EditTask/EditTask';
+import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
 import { ReactComponent as EditIcon } from '../../assets/pencil.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/bin.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
@@ -11,6 +12,7 @@ import { displayDueDate, checkIfTaskIsOverdue } from '../../utils/date.utils';
 
 const Task = ({ task, updateUser }) => {
     const [editMode, setEditMode] = useState(false);
+    const [deleteTaskModalOpen, setDeleteTaskModalOpen] = useState(false);
 
     const completedCheckbox = useRef(null);
     const calendarIcon = useRef(null);
@@ -24,8 +26,10 @@ const Task = ({ task, updateUser }) => {
 
     useEffect(() => {
         if (calendarIcon && dueDateText && task.dueDate !== '') {
+            // Check if the task is overdue and show the due date in red
+            // if it is overdue
             const isOverdue = checkIfTaskIsOverdue(task.dueDate);
-            if (isOverdue) {
+            if (isOverdue && !task.completed) {
                 calendarIcon.current.classList.add('task-calendar-late');
                 dueDateText.current.classList.add('task-due-date-late');
             } else {
@@ -33,7 +37,7 @@ const Task = ({ task, updateUser }) => {
                 dueDateText.current.classList.remove('task-due-date-late');
             }
         }
-    }, [calendarIcon, dueDateText, task.dueDate]);
+    }, [calendarIcon, dueDateText, task.dueDate, task.completed]);
 
     /**
      * Updates the completed property of the task.
@@ -47,6 +51,20 @@ const Task = ({ task, updateUser }) => {
         axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
             .then(res => updateUser(task.userId))
             .catch(err => console.log(err));
+    };
+
+    /**
+     * Opens the delete confirmation modal for the task.
+     */
+    const openConfirmDeleteTaskModal = () => {
+        setDeleteTaskModalOpen(true);
+    };
+
+    /**
+     * Closes of delete confirmation modal for the task.
+     */
+    const closeConfirmDeleteTaskModal = () => {
+        setDeleteTaskModalOpen(false);
     };
 
     /**
@@ -98,7 +116,8 @@ const Task = ({ task, updateUser }) => {
                                     <EditIcon />
                                 </button>
                             }
-                            <button className="task-btn task-delete-btn" aria-label='Delete Task'>
+                            <button className="task-btn task-delete-btn" aria-label='Delete Task' 
+                                    onClick={openConfirmDeleteTaskModal}>
                                 <span className="hidden">Delete</span>
                                 <DeleteIcon />
                             </button>
@@ -111,6 +130,10 @@ const Task = ({ task, updateUser }) => {
                         </div>    
                     }
                 </div>
+            }
+            {deleteTaskModalOpen ? 
+                <DeleteTaskModal task={task} closeModal={closeConfirmDeleteTaskModal} updateUser={updateUser} /> 
+                : null
             }
         </div>
     );

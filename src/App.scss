@@ -1,3 +1,21 @@
+@use './global' as g;
+
 .hidden {
   display: none;
+}
+
+.modal-container {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include g.flex-centre();
+  background-color: var(--modal-backdrop);
+  z-index: 100;
+  .modal {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--component-bg);
+  }
 }
