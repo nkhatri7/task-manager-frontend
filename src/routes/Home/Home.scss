@@ -8,12 +8,15 @@
     > header {
         width: 100%;
         @include g.space-between();
-        > .taskr-logo-container {
-            text-decoration: none;
-            .taskr-logo {
-                font-family: 'Lobster', 'Ubuntu', 'Roboto', sans-serif;
-                font-size: 24px;
-                color: var(--text-color);
+        > .header-section {
+            @include g.flex();
+            > .taskr-logo-container {
+                text-decoration: none;
+                .taskr-logo {
+                    font-family: 'Lobster', 'Ubuntu', 'Roboto', sans-serif;
+                    font-size: 24px;
+                    color: var(--text-color);
+                }
             }
         }
     }

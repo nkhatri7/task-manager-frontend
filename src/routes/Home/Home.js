@@ -6,6 +6,7 @@ import './Home.scss';
 import Menu from '../../components/Menu/Menu';
 import NewTask from '../../components/NewTask/NewTask';
 import Task from '../../components/Task/Task';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
@@ -26,7 +27,8 @@ const Home = ({ user, signOutUser, updateUser }) => {
     }, [user, navigate]);
 
     /**
-     * Uses the taskr API to fetch the active user's tasks and updates the tasks state.
+     * Uses the taskr API to fetch the active user's tasks and updates the tasks
+     * state.
      * @param {string} userId The active user's ID
      */
     const getUserTasks = (userId) => {
@@ -37,7 +39,8 @@ const Home = ({ user, signOutUser, updateUser }) => {
 
     /**
      * Updates the tasks filter based on the user's filter selection.
-     * @param {Event} e The event that triggered this function (the filter option click)
+     * @param {Event} e The event that triggered this function (the filter 
+     * option click)
      */
     const handleTasksFilterChange = (e) => {
         const filter = e.target.dataset.filter;
@@ -46,8 +49,10 @@ const Home = ({ user, signOutUser, updateUser }) => {
     };
 
     /**
-     * Updates the styling on the tasks filter options to show the active filter.
-     * @param {String} selectedFilter The tasks filter that has been selected by the user
+     * Updates the styling on the tasks filter options to show the active 
+     * filter.
+     * @param {string} selectedFilter The tasks filter that has been selected by
+     * the user
      */
     const updateTasksFiltersStyling = (selectedFilter) => {
         const filters = document.querySelectorAll('.tasks-filter');
@@ -61,8 +66,10 @@ const Home = ({ user, signOutUser, updateUser }) => {
     };
 
     /**
-     * Creates a welcome message for the user based on the current time of the day.
-     * @returns {String} A welcome message to the user based on the current time of the day.
+     * Creates a welcome message for the user based on the current time of the 
+     * day.
+     * @returns {string} A welcome message to the user based on the current time
+     * of the day.
      */
     const getWelcomeMessage = () => {
         const date = new Date();
@@ -71,9 +78,11 @@ const Home = ({ user, signOutUser, updateUser }) => {
     };
 
     /**
-     * Gets the appropriate greeting based on the time of day from the given date object.
+     * Gets the appropriate greeting based on the time of day from the given 
+     * date object.
      * @param {Date} date The date used to generate the greeting message
-     * @returns {String} The appropriate greeting based on the current time of day.
+     * @returns {string} The appropriate greeting based on the current time of 
+     * day.
      */
     const getGreeting = (date) => {
         const hour = date.getHours();
@@ -103,10 +112,15 @@ const Home = ({ user, signOutUser, updateUser }) => {
     return (
         <div className="homepage">
             <header>
-                <Link to='/' className='taskr-logo-container'>
-                    <h1 className="taskr-logo">Taskr</h1>
-                </Link>
-                <Menu user={user} signOutUser={signOutUser} />
+                <section className="header-section">
+                    <Link to='/' className='taskr-logo-container'>
+                        <h1 className="taskr-logo">Taskr</h1>
+                    </Link>
+                </section>
+                <section className="header-section">
+                    <ThemeToggle />
+                    <Menu user={user} signOutUser={signOutUser} />
+                </section>
             </header>
             <main>
                 <h2 className="welcome-message">{user ? getWelcomeMessage() : ''}</h2>

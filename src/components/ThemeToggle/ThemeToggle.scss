@@ -1,0 +1,18 @@
+.theme-toggle-btn {
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border: none;
+    margin-right: 20px;
+    cursor: pointer;
+    .theme-icon {
+        stroke: var(--text-color);
+        fill: transparent;
+        transition: fill 0.3s ease;
+        @media screen and (min-width: 1440px) {
+            &:hover {
+                fill: var(--text-color);
+            }
+        }
+    }
+}
