@@ -39,6 +39,14 @@ const Task = ({ task, updateUser }) => {
         }
     }, [calendarIcon, dueDateText, task.dueDate, task.completed]);
 
+    useEffect(() => {
+        // Check if the task is completed and make the calendar icon grey if the
+        // task is completed
+        if (calendarIcon && task.completed && task.dueDate !== '') {
+            calendarIcon.current.classList.add('task-calendar-icon-completed');
+        }
+    }, [task.completed, task.dueDate, calendarIcon]);
+
     /**
      * Updates the completed property of the task.
      * @param {Event} e The event of the user ticking or unticking the completed
@@ -126,7 +134,10 @@ const Task = ({ task, updateUser }) => {
                     {task.dueDate === '' ? null :
                         <div className="task-row task-row-bottom">
                             <CalendarIcon ref={calendarIcon} />
-                            <div className="task-due-date" ref={dueDateText}>{displayDueDate(task.dueDate)}</div>
+                            <div className={`task-due-date ${task.completed ? 'task-due-date-completed' : ''}`} 
+                                    ref={dueDateText}>
+                                {displayDueDate(task.dueDate)}
+                            </div>
                         </div>    
                     }
                 </div>

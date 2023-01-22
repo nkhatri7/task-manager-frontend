@@ -113,11 +113,17 @@
         &.task-calendar-late {
             stroke: var(--accent-red);
         }
+        &.task-calendar-icon-completed {
+            stroke: var(--grey-text);
+        }
     }
     .task-due-date {
         color: var(--accent-green);
         &.task-due-date-late {
             color: var(--accent-red);
+        }
+        &.task-due-date-completed {
+            color: var(--grey-text);
         }
     }
     @media screen and (min-width: 1440px) {
