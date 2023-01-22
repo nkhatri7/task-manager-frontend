@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import './App.scss';
+
+import useDetectTheme from './hooks/useDetectTheme';
+
 import Auth from './routes/Auth/Auth';
 import Home from './routes/Home/Home';
-import useDetectTheme from './hooks/useDetectTheme';
-import './App.scss';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -38,7 +40,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home user={user} signOutUser={signOutUser} />} />
+                <Route path='/' element={<Home user={user} signOutUser={signOutUser} updateUser={getActiveUser} />} />
                 <Route path='/auth' element={<Auth user={user} updateUser={getActiveUser} />} />
             </Routes>
         </BrowserRouter>

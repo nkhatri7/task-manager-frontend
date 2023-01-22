@@ -10,7 +10,7 @@ const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
 const NO_FILTER = 'No Filter';
 
-const Home = ({ user, signOutUser }) => {
+const Home = ({ user, signOutUser, updateUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ const Home = ({ user, signOutUser }) => {
     });
 
     const taskItems = filteredTasks.map(task => (
-        <Task key={task._id} task={task} />
+        <Task key={task._id} task={task} updateUser={updateUser} />
     ));
 
     return (
@@ -112,16 +112,14 @@ const Home = ({ user, signOutUser }) => {
                 <p className="tasks-message">Here's what you have going on:</p>
                 <div className="tasks-filters-container">
                     <div className="tasks-filter" data-filter={NO_FILTER} onClick={handleTasksFilterChange}>All</div>
-                    <div className="tasks-filter active-tasks-filter" 
-                        data-filter={UNCOMPLETED}
+                    <div className="tasks-filter active-tasks-filter" data-filter={UNCOMPLETED} 
                         onClick={handleTasksFilterChange}>Uncompleted</div>
-                    <div className="tasks-filter" 
-                        data-filter={COMPLETED}
-                        onClick={handleTasksFilterChange}>Completed</div>
+                    <div className="tasks-filter" data-filter={COMPLETED} onClick={handleTasksFilterChange}>
+                        Completed
+                    </div>
                 </div>
                 <div className="tasks-container">
-                    {filteredTasks.length > 0 ? taskItems : 
-                        <p className='no-tasks-msg'>No tasks</p>}
+                    {filteredTasks.length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
                 </div>
             </main>
         </div>

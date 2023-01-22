@@ -10,15 +10,26 @@
 }
 
 .task {
-    @include g.space-between();
+    @include g.flex-column();
+    justify-content: center;
     width: 100%;
     padding: 15px;
     background-color: var(--component-bg);
     border-radius: 10px;
-    min-height: 55px;
     cursor: pointer;
-    .task-section {
+    > .task-row {
+        width: 100%;
         @include g.flex();
+        &.task-row-top {
+            @include g.space-between();
+            min-height: 24px;
+        }
+        &.task-row-bottom {
+            margin: 5px 0 0 35px;
+        }
+        .task-section {
+            @include g.flex();
+        }
     }
     .checkbox-container {
         margin-right: 15px;
@@ -94,7 +105,20 @@
             }
         }
     }
-
+    .task-calendar-icon {
+        stroke: var(--accent-green);
+        height: 16px;
+        margin-right: 5px;
+        &.task-calendar-late {
+            stroke: var(--accent-red);
+        }
+    }
+    .task-due-date {
+        color: var(--accent-green);
+        &.task-due-date-late {
+            color: var(--accent-red);
+        }
+    }
     @media screen and (min-width: 1440px) {
         &:hover .task-btn {
             display: block;
