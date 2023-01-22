@@ -8,6 +8,8 @@ import NewTask from '../../components/NewTask/NewTask';
 import Task from '../../components/Task/Task';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
+import { checkIfTaskIsOverdue } from '../../utils/date.utils';
+
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
 const NO_FILTER = 'No Filter';
@@ -95,17 +97,53 @@ const Home = ({ user, signOutUser, updateUser }) => {
         }
     };
 
-    const filteredTasks = tasks.filter(task => {
+    /**
+     * Extracts a selected group of tasks based on the current tasks filter.
+     * @returns {object[]} An array of objects with task data.
+     */
+    const getFilteredTasks = () => {
         if (tasksFilter === UNCOMPLETED) {
-            return task.completed === false;
+            const uncompletedTasks = tasks.filter(task => !task.completed);
+            const orderedTasks = orderUncompletedTasks(uncompletedTasks);
+            return orderedTasks;
         } else if (tasksFilter === COMPLETED) {
-            return task.completed === true;
+            return tasks.filter(task => task.completed);
         } else {
-            return true;
+            return tasks;
         }
-    });
+    };
 
-    const taskItems = filteredTasks.reverse().map(task => (
+    /**
+     * Orders the given uncompleted tasks so that the overdue tasks are
+     * displayed before the remaining tasks.
+     * @param {object[]} tasks An array of tasks that are uncompleted
+     * @returns {object[]} An array of tasks with the overdue tasks being
+     * displayed first.
+     */
+    const orderUncompletedTasks = (tasks) => {
+        const overdueTasks = [];
+        const remainingTasks = [];
+        tasks.forEach(task => {
+            // If task is overdue, add it to overdueTasks array, otherwise add
+            // to remainingTasks array
+            if (task.dueDate !== '') {
+                const isOverdue = checkIfTaskIsOverdue(task.dueDate);
+                if (isOverdue) {
+                    overdueTasks.push(task);
+                } else {
+                    remainingTasks.push(task);
+                }
+            } else {
+                remainingTasks.push(task);
+            }
+        });
+
+        // Put remaining tasks first because the array gets reversed in the
+        // taskItems variable
+        return remainingTasks.concat(overdueTasks);
+    };
+
+    const taskItems = getFilteredTasks().reverse().map(task => (
         <Task key={task._id} task={task} updateUser={updateUser} />
     ));
 
@@ -135,7 +173,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
                 </div>
                 {tasksFilter === COMPLETED ? null : <NewTask updateUser={updateUser} />}
                 <div className="tasks-container">
-                    {filteredTasks.length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
+                    {getFilteredTasks().length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
                 </div>
             </main>
         </div>

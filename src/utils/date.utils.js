@@ -27,16 +27,6 @@ const parseDate = (dateString) => {
 };
 
 /**
- * Formats the given date into the following format: dd/MM/yyyy hh:mm:ss.
- * @param {Date} date the date that needs to be formatted
- * @returns {string} A formatted datetime string.
- */
-const formatDateTime = (date) => {
-    const dateString = formatDate(date);
-    return `${dateString} ${date.toLocaleTimeString()}`;
-};
-
-/**
  * Displays the date from the given date string in the format of dd MMM yyyy.
  * @param {string} dateString A string in the format of dd/MM/yyyy
  * @returns {string} A formatted date string that displays the day, month, and
@@ -114,7 +104,6 @@ const formatNumber = (num) => {
 export {
     formatDate,
     parseDate,
-    formatDateTime,
     displayDueDate,
     checkIfTaskIsOverdue,
 };
