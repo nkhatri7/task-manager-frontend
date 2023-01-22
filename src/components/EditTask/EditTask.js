@@ -58,8 +58,12 @@ const EditTask = ({ task, handleClose, updateUser }) => {
     const handleSave = () => {
         // If the component has been passed a task object, it means a task is
         // being edited and so we need to save the edit
+        // Otherwise, if the task provided is null, then a new task is being
+        // created
         if (task) {
             saveEdit();
+        } else {
+            createTask();
         }
     };
 
@@ -67,11 +71,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
      * Saves the changes to the task.
      */
     const saveEdit = () => {
-        const updatedDate = date ? formatDate(date) : '';
-        const data = {
-            text: text,
-            dueDate: updatedDate,
-        };
+        const data = getTaskData();
         axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
             .then(res => handleSaveSuccess())
             .catch(err => console.log(err));
@@ -84,6 +84,40 @@ const EditTask = ({ task, handleClose, updateUser }) => {
     const handleSaveSuccess = () => {
         handleClose();
         updateUser(task.userId);
+    };
+
+    /**
+     * Creates a new task.
+     */
+    const createTask = () => {
+        const data = getTaskData();
+        data.userId = localStorage.getItem('taskr-user');
+        axios.post('http://localhost:8080/api/v1/tasks/', data)
+            .then(res => handleTaskCreationSuccess(res))
+            .catch(err => console.log(err));
+    };
+
+    /**
+     * Goes back to the default home page view and updates the user state in the
+     * application.
+     * @param {AxiosResponse<any, any>} res Response from the API
+     */
+    const handleTaskCreationSuccess = (res) => {
+        handleClose();
+        updateUser(res.data.user._id);
+    };
+
+    /**
+     * Creates an object with the text and formatted due date for the task.
+     * @returns {object} An object with the text and formatted due date.
+     */
+    const getTaskData = () => {
+        const dueDate = date ? formatDate(date) : '';
+        const data = {
+            text: text,
+            dueDate: dueDate,
+        };
+        return data;
     };
 
     return (

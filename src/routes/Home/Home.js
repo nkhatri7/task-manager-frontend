@@ -3,8 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Home.scss';
 
-import Task from '../../components/Task/Task';
 import Menu from '../../components/Menu/Menu';
+import NewTask from '../../components/NewTask/NewTask';
+import Task from '../../components/Task/Task';
 
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
@@ -95,7 +96,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
         }
     });
 
-    const taskItems = filteredTasks.map(task => (
+    const taskItems = filteredTasks.reverse().map(task => (
         <Task key={task._id} task={task} updateUser={updateUser} />
     ));
 
@@ -118,6 +119,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
                         Completed
                     </div>
                 </div>
+                <NewTask updateUser={updateUser} />
                 <div className="tasks-container">
                     {filteredTasks.length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
                 </div>

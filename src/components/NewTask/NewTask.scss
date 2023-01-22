@@ -1,0 +1,31 @@
+@use '../../global' as g;
+
+.new-task-container {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 15px;
+    .new-task {
+        @include g.flex();
+        width: 100%;
+        padding: 15px;
+        background-color: var(--component-bg);
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover .new-task-plus-icon {
+            background-color: var(--accent-green);
+            stroke: white;
+        }
+        > .new-task-plus-icon {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            stroke: var(--accent-green);
+            margin-right: 10px;
+            transition: background-color 0.3s ease, stroke 0.3s ease;
+        }
+        > .new-task-prompt {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+    }
+}

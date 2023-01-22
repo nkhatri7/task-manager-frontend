@@ -79,9 +79,14 @@ const Task = ({ task, updateUser }) => {
                     <div className="task-row task-row-top">
                         <section className="task-section">
                             <div className="checkbox-container" onClick={preventTaskModalDisplay}>
-                                <input type="checkbox" name="task-completed-checkbox" id="task-completed-checkbox"
-                                    onChange={handleCompletedChange} ref={completedCheckbox} />
-                                <label htmlFor="task-completed-checkbox"></label>
+                                <input 
+                                    type="checkbox" 
+                                    name={`task-completed-checkbox-${task._id}`}
+                                    id={`task-completed-checkbox-${task._id}`}
+                                    onChange={handleCompletedChange} 
+                                    ref={completedCheckbox} 
+                                />
+                                <label htmlFor={`task-completed-checkbox-${task._id}`}></label>
                             </div>
                             <p className="task-text">{task.text}</p>
                         </section>
