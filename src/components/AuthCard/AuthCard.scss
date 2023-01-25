@@ -1,15 +1,16 @@
 @use '../../global' as g;
 
 .auth-card {
-    width: 90%;
+    width: 95%;
     max-width: 400px;
+    background-color: var(--base);
+    padding: 30px 15px;
+    border-radius: 10px;
     @media screen and (min-width: 500px) {
-        border-radius: 10px;
         box-shadow: 0px 0px 10px 0px var(--box-shadow-colour);
         -webkit-box-shadow: 0px 0px 10px 0px var(--box-shadow-colour);
         -moz-box-shadow: 0px 0px 10px 0px var(--box-shadow-colour);
         padding: 30px;
-        background-color: var(--base);
     }
     > .auth-form {
         @include g.flex-column-centre();
@@ -33,25 +34,19 @@
                     left: 20px;
                     transform: translateY(-50%);
                     color: var(--neutral-grey);
-                    background-color: var(--bg);
+                    background-color: var(--base);
                     padding: 2px;
                     transition: font-size 0.3s ease, top 0.3s ease, color 0.3s ease;
-                    @media screen and (min-width: 500px) {
-                        background-color: var(--base);
-                    }
                 }
                 > .auth-input {
                     width: 100%;
                     padding: 15px 20px;
                     border-radius: 5px;
-                    background-color: var(--bg);
+                    background-color: var(--base);
                     border: 1px solid var(--neutral-grey);
                     font-size: 16px;
                     color: var(--text-color);
                     caret-color: var(--text-color);
-                    @media screen and (min-width: 500px) {
-                        background-color: var(--base);
-                    }
                     &::placeholder {
                         visibility: hidden;
                     }
@@ -68,13 +63,9 @@
                     // REMOVING AUTOILL COLOURS
                     &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus {
                         font-family: 'Roboto', sans-serif;
-                        
                         -webkit-text-fill-color: var(--text-color);
-                        -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset;
+                        -webkit-box-shadow: 0 0 0px 1000px var(--base) inset;
                         transition: background-color 5000s ease-in-out 0s;
-                        @media screen and (min-width: 500px) {
-                            -webkit-box-shadow: 0 0 0px 1000px var(--base) inset;
-                        }
                     }
                     &:-webkit-autofill {
                         border: 1px solid var(--neutral-grey);
@@ -105,11 +96,8 @@
                         font-family: 'Roboto', sans-serif;
                         border: 1px solid var(--accent-red);
                         -webkit-text-fill-color: var(--text-color);
-                        -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset;
+                        -webkit-box-shadow: 0 0 0px 1000px var(--base) inset;
                         transition: background-color 5000s ease-in-out 0s;
-                        @media screen and (min-width: 500px) {
-                            -webkit-box-shadow: 0 0 0px 1000px var(--base) inset;
-                        }
                     }
                 }
                 > .password-visibility-toggle {
