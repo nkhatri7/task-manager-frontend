@@ -6,6 +6,7 @@ import './Home.scss';
 import Menu from '../../components/Menu/Menu';
 import NewTask from '../../components/NewTask/NewTask';
 import Task from '../../components/Task/Task';
+import TaskModal from '../../components/TaskModal/TaskModal';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 import { checkIfTaskIsOverdue } from '../../utils/date.utils';
@@ -17,6 +18,9 @@ const NO_FILTER = 'No Filter';
 const Home = ({ user, signOutUser, updateUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [isTaskModalOpen, setTaskModalOpen] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,6 +31,16 @@ const Home = ({ user, signOutUser, updateUser }) => {
             navigate('/auth');
         }
     }, [user, navigate]);
+
+    useEffect(() => {
+        // Update data for selected task if modal is open
+        if (selectedTask) {
+            const task = tasks.find(task => task._id === selectedTask._id);
+            if (task) {
+                setSelectedTask(task);
+            }
+        }
+    }, [tasks, selectedTask]);
 
     /**
      * Uses the taskr API to fetch the active user's tasks and updates the tasks
@@ -98,6 +112,23 @@ const Home = ({ user, signOutUser, updateUser }) => {
     };
 
     /**
+     * Opens the selected task in detailed view.
+     * @param {object} task The task the user wants to view
+     */
+    const openTaskModal = (task) => {
+        setSelectedTask(task);
+        setTaskModalOpen(true);
+    };
+
+    /**
+     * Closes the detailed view of the selected task.
+     */
+    const closeTaskModal = () => {
+        setTaskModalOpen(false);
+        setSelectedTask(null);
+    };
+
+    /**
      * Extracts a selected group of tasks based on the current tasks filter.
      * @returns {object[]} An array of objects with task data.
      */
@@ -109,7 +140,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
         } else if (tasksFilter === COMPLETED) {
             return tasks.filter(task => task.completed);
         } else {
-            return tasks;
+            return tasks.reverse();
         }
     };
 
@@ -144,7 +175,12 @@ const Home = ({ user, signOutUser, updateUser }) => {
     };
 
     const taskItems = getFilteredTasks().reverse().map(task => (
-        <Task key={task._id} task={task} updateUser={updateUser} />
+        <Task 
+            key={task._id} 
+            task={task} 
+            updateUser={updateUser} 
+            openTaskModal={openTaskModal} 
+        />
     ));
 
     return (
@@ -175,6 +211,10 @@ const Home = ({ user, signOutUser, updateUser }) => {
                 <div className="tasks-container">
                     {getFilteredTasks().length > 0 ? taskItems : <p className='no-tasks-msg'>No tasks</p>}
                 </div>
+                {isTaskModalOpen ? 
+                    <TaskModal task={selectedTask} handleClose={closeTaskModal} updateUser={updateUser} /> 
+                    : null
+                }
             </main>
         </div>
     );

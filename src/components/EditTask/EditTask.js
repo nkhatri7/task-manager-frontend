@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './EditTask.scss';
 
-import { DatePicker } from 'react-widgets/cjs';
-import 'react-widgets/scss/styles.scss';
+import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
 
 import useAutosizeTextArea from '../../hooks/useAutosizeTextArea';
+import useInputAutoFocus from '../../hooks/useInputAutoFocus';
 import { formatDate, parseDate } from '../../utils/date.utils';
 
 const EditTask = ({ task, handleClose, updateUser }) => {
@@ -18,18 +18,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
     const taskTextInput = useRef(null);
 
     useAutosizeTextArea(taskTextInput, text);
-
-    // Set focus on textarea initially
-    useEffect(() => {
-        if (taskTextInput) {
-            // Get the length of the text in the textarea and put the cursor at
-            // the end of the pre-existing text
-            // (if any)
-            const length = taskTextInput.current.value.length;
-            taskTextInput.current.setSelectionRange(length, length);
-            taskTextInput.current.focus();
-        }
-    }, [taskTextInput]);
+    useInputAutoFocus(taskTextInput);
 
     useEffect(() => {
         setTextEmpty(text.trim().length === 0);
@@ -114,7 +103,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
     const getTaskData = () => {
         const dueDate = date ? formatDate(date) : '';
         const data = {
-            text: text,
+            text: text.trim(),
             dueDate: dueDate,
         };
         return data;
@@ -125,12 +114,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
             <section className="edit-task-data-container">
                 <textarea name="edit-task-text" id="edit-task-text" className="edit-task-text-input" rows={1}
                     value={text} onChange={handleTextChange} placeholder="Task name" ref={taskTextInput} />
-                <section className="edit-task-date-container">
-                    <p className="edit-task-date-prompt">Due date</p>
-                    <DatePicker placeholder='dd/mm/yyyy' value={date} onChange={handleDateChange}
-                        valueEditFormat={{ dateStyle: "short" }} valueDisplayFormat={{ dateStyle: "medium" }}
-                        className='edit-task-datepicker' />
-                </section>
+                <TaskDatePicker date={date} updateDate={handleDateChange} />
             </section>
             <section className="edit-task-action-btns">
                 <button className="edit-task-action-btn edit-task-cancel-btn" onClick={handleClose}>Cancel</button>

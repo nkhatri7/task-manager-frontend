@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import './Task.scss';
 
+import TaskCheckbox from '../TaskCheckbox/TaskCheckbox';
 import EditTask from '../EditTask/EditTask';
 import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
 import { ReactComponent as EditIcon } from '../../assets/pencil.svg';
@@ -10,19 +10,12 @@ import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 
 import { displayDueDate, checkIfTaskIsOverdue } from '../../utils/date.utils';
 
-const Task = ({ task, updateUser }) => {
+const Task = ({ task, updateUser, openTaskModal }) => {
     const [editMode, setEditMode] = useState(false);
     const [deleteTaskModalOpen, setDeleteTaskModalOpen] = useState(false);
 
-    const completedCheckbox = useRef(null);
     const calendarIcon = useRef(null);
     const dueDateText = useRef(null);
-
-    useEffect(() => {
-        if (completedCheckbox && task.completed) {
-            completedCheckbox.current.checked = true;
-        }
-    }, [completedCheckbox, task.completed]);
 
     useEffect(() => {
         if (calendarIcon && dueDateText && task.dueDate !== '') {
@@ -48,23 +41,20 @@ const Task = ({ task, updateUser }) => {
     }, [task.completed, task.dueDate, calendarIcon]);
 
     /**
-     * Updates the completed property of the task.
-     * @param {Event} e The event of the user ticking or unticking the completed
-     * checkbox
+     * Prevents the task modal from being opened when the user clicks on the 
+     * checkbox.
+     * @param {Event} e The event that called this function
      */
-    const handleCompletedChange = (e) => {
-        const data = {
-            completed: e.target.checked,
-        };
-        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
-            .then(res => updateUser(task.userId))
-            .catch(err => console.log(err));
+    const preventTaskModalDisplay = (e) => {
+        e.stopPropagation();
     };
 
     /**
      * Opens the delete confirmation modal for the task.
+     * @param {Event} e The event that called this function
      */
-    const openConfirmDeleteTaskModal = () => {
+    const openConfirmDeleteTaskModal = (e) => {
+        preventTaskModalDisplay(e);
         setDeleteTaskModalOpen(true);
     };
 
@@ -76,18 +66,11 @@ const Task = ({ task, updateUser }) => {
     };
 
     /**
-     * Prevents the task modal from being opened when the user clicks on the 
-     * checkbox.
+     * Displays task in editor mode.
      * @param {Event} e The event that called this function
      */
-    const preventTaskModalDisplay = (e) => {
-        e.stopPropagation();
-    };
-
-    /**
-     * Displays task in editor mode.
-     */
-    const displayEditMode = () => {
+    const displayEditMode = (e) => {
+        preventTaskModalDisplay(e);
         setEditMode(true);
     };
 
@@ -101,20 +84,11 @@ const Task = ({ task, updateUser }) => {
     return (
         <div className="task-container">
             {editMode ? <EditTask task={task} handleClose={closeEditMode} updateUser={updateUser} /> :
-                <div className="task" data-task-id={task._id}>
+                <div className="task" onClick={() => openTaskModal(task)}>
                     <div className="task-row task-row-top">
                         <section className="task-section">
-                            <div className="checkbox-container" onClick={preventTaskModalDisplay}>
-                                <input 
-                                    type="checkbox" 
-                                    name={`task-completed-checkbox-${task._id}`}
-                                    id={`task-completed-checkbox-${task._id}`}
-                                    onChange={handleCompletedChange} 
-                                    ref={completedCheckbox} 
-                                />
-                                <label htmlFor={`task-completed-checkbox-${task._id}`}></label>
-                            </div>
-                            <p className="task-text">{task.text}</p>
+                            <TaskCheckbox task={task} updateUser={updateUser} />
+                            <p className={`task-text${task.completed ? ' task-text-completed' : ''}`}>{task.text}</p>
                         </section>
                         <section className="task-section">
                             {task.completed ? null : 

@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './DeleteTaskModal.scss';
 
-const DeleteTaskModal = ({ task, closeModal, updateUser }) => {
-    
+const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
     /**
      * Deletes the task.
      */
@@ -20,6 +19,9 @@ const DeleteTaskModal = ({ task, closeModal, updateUser }) => {
     const handleTaskDeletionSuccess = () => {
         closeModal();
         updateUser(task.userId);
+        if (closeSrc) {
+            closeSrc();
+        }
     };
 
     return (

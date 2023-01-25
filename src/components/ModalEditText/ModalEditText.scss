@@ -1,48 +1,38 @@
 @use '../../global' as g;
 
-.edit-task {
-    @include g.flex-column();
-    width: 100%;
-    max-width: 600px;
-    padding: 15px;
-    background-color: var(--component-bg);
-    border-radius: 10px;
-    > .edit-task-data-container {
+.modal-edit-container {
+    width: 90%;
+    > .modal-text-input {
         width: 100%;
+        background-color: transparent;
+        padding: 15px 10px;
         border: 1px solid var(--neutral-grey);
-        border-radius: 10px;
-        @include g.flex-column();
-        padding: 10px;
-        > .edit-task-text-input {
-            width: 100%;
-            background-color: transparent;
-            color: var(--text-color);
-            border: none;
-            font-size: 16px;
-            resize: none;
-            margin-bottom: 20px;
-            &:focus {
-                outline: none !important;
-            }
+        border-radius: 5px;
+        resize: none;
+        font-size: 16px;
+        color: var(--text-color);
+        &:focus {
+            border: 1px solid var(--accent-green);
+            outline: 1px solid var(--accent-green);
         }
     }
-    > .edit-task-action-btns {
+    > .action-btns-container {
         width: 100%;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         margin-top: 10px;
-        > .edit-task-action-btn {
+        > .modal-edit-btn {
             padding: 8px 0;
             width: 70px;
             border: none;
             border-radius: 5px;
             font-weight: 500;
             cursor: pointer;
-            &.edit-task-cancel-btn {
+            &.modal-edit-cancel-btn {
                 background-color: var(--grey-btn);
             }
-            &.edit-task-save-btn {
+            &.modal-edit-save-btn {
                 background-color: var(--accent-green);
                 color: white;
                 margin-left: 10px;
@@ -52,10 +42,10 @@
                 }
             }
             @media screen and (min-width: 1440px) {
-                &.edit-task-cancel-btn:hover {
+                &.modal-edit-cancel-btn:hover {
                     background-color: #A3A3A3;
                 }
-                &.edit-task-save-btn:not(:disabled):hover {
+                &.modal-edit-save-btn:not(:disabled):hover {
                     background-color: var(--accent-green-hover);
                 }
             }

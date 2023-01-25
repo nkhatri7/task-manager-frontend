@@ -1,0 +1,62 @@
+@use '../../global' as g;
+
+.task-datepicker-container {
+    @include g.flex-column();
+    > .task-datepicker-prompt {
+        color: var(--grey-text);
+        font-size: 14px;
+    }
+    .task-datepicker {
+        max-width: 150px;
+        font-size: 14px;
+        margin-top: 5px;
+        &.rw-state-focus {
+            .rw-widget-picker {
+                outline: 1px solid var(--accent-green) !important;
+                box-shadow: none !important;
+                transition: none !important;
+                border-color: var(--accent-green);
+            }
+            .rw-input-addon, .rw-input-addon.rw-picker-btn {
+                border-color: var(--accent-green);
+            }
+        }
+        .rw-widget-picker, .rw-widget-input, .rw-picker-btn {
+            background-color: transparent !important;
+        }
+        .rw-widget-input {
+            color: var(--text-color);
+        }
+        .rw-picker-btn {
+            color: var(--accent-green);
+        }
+        .rw-popup {
+            background-color: var(--calendar-bg);
+            .rw-calendar-grid {
+                background-color: var(--calendar-bg);
+            }
+            .rw-calendar-btn, .rw-head-cell, .rw-cell {
+                color: var(--text-color);
+            }
+            .rw-calendar-btn, .rw-cell {
+                &:hover:not(.rw-state-selected) {
+                    background-color: var(--component-bg);
+                }
+            }
+            .rw-cell-off-range {
+                color: var(--unavailable-text);
+            }
+            .rw-state-selected {
+                font-weight: bold;
+                background-color: var(--accent-green);
+                border-color: var(--accent-green);
+                color: white;
+            }
+        }
+    }
+    .rw-calendar-popup {
+        @media screen and (max-width: 300px) {
+            max-width: 250px;
+        }
+    }
+}
