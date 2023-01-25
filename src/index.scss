@@ -22,6 +22,7 @@
     --component-bg: #E4E4E4;
     --calendar-bg: #FFFFFF;
     --modal-backdrop: rgba(0, 0, 0, 0.7);
+    --unavailable-text: #DADADA;
 }
 
 [data-theme="dark"] {
@@ -33,6 +34,7 @@
     --component-bg: #141414;
     --calendar-bg: #303030;
     --modal-backdrop: rgba(255, 255, 255, 0.3);
+    --unavailable-text: #585858;
 }
 
 *, ::before, ::after {
