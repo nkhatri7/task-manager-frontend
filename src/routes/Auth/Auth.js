@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthCard from '../../components/AuthCard/AuthCard';
+import AuthForm from '../../components/AuthForm/AuthForm';
 import './Auth.scss';
 
 const Auth = ({ user, updateUser }) => {
@@ -16,7 +16,9 @@ const Auth = ({ user, updateUser }) => {
     return (
         <main className="auth-main">
             <h1 className="auth-heading">Taskr</h1>
-            <AuthCard updateUser={updateUser} />
+            <section className="auth-card">
+                <AuthForm updateUser={updateUser} />
+            </section>
         </main>
     );
 };
