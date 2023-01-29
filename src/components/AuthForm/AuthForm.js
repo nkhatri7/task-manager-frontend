@@ -124,18 +124,14 @@ const AuthForm = ({ updateUser, authType }) => {
 
     /**
      * Handles any errors from the API response after requesting to sign in.
-     * @param {Error} err The error response from the API call.
+     * @param {AxiosError} err The error response from the API call.
      */
     const handleSignInError = (err) => {
         if (err.response.status === 404) {
-            const errorMsg = 'An account with this email does not exist. Please' 
-                + ' create an account with this email or sign in with another'
-                + ' email.';
-            displayError(errorMsg, emailInput, emailErrorMsg);
+            displayError(err.response.data, emailInput, emailErrorMsg);
             removeError(passwordInput, passwordErrorMsg);
         } else if (err.response.status === 401) {
-            const errorMsg = 'Password is incorrect.';
-            displayError(errorMsg, passwordInput, passwordErrorMsg);
+            displayError(err.response.data, passwordInput, passwordErrorMsg);
             removeError(emailInput, emailErrorMsg);
         } else {
             console.log(err);
@@ -159,17 +155,11 @@ const AuthForm = ({ updateUser, authType }) => {
     /**
      * Handles any errors from the API response after requesting to create an 
      * account.
-     * @param {Error} err The error response from the API call.
+     * @param {AxiosError} err The error response from the API call.
      */
     const handleRegistrationError = (err) => {
-        if (err.response.status === 403) {
-            const errorMsg = 'An account with this email already exists. Please'
-                + ' sign in using this email or create an account with another'
-                + ' email.';
-            displayError(errorMsg, emailInput, emailErrorMsg);
-            removeError(passwordInput, passwordErrorMsg);
-        } else if (err.response.status === 406) {
-            displayError('Email is invalid.', emailInput, emailErrorMsg);
+        if (err.response.status === 401 || err.response.status === 406) {
+            displayError(err.response.data, emailInput, emailErrorMsg);
             removeError(passwordInput, passwordErrorMsg);
         } else {
             console.log(err);
