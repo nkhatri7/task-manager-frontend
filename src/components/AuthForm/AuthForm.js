@@ -14,8 +14,7 @@ import './AuthForm.scss';
 const SIGN_IN = 'Sign In';
 const REGISTRATION = 'Registration';
 
-const AuthForm = ({ updateUser }) => {
-    const [authType, setAuthType] = useState(SIGN_IN);
+const AuthForm = ({ updateUser, authType }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -73,27 +72,14 @@ const AuthForm = ({ updateUser }) => {
     };
 
     /**
-     * Toggles the auth type and handles all necessary actions required when 
-     * switching.
+     * Navigates to the other auth page.
      */
     const handleAuthTypeToggle = () => {
-        // Reset values
-        setName('');
-        setEmail('');
-        setPassword('');
-        // Reset styling
-        passwordInput.current.type = 'password';
-        updateLabelStyling(emailLabel, true);
-        updateLabelStyling(passwordLabel, true);
-        // Remove errors
-        removeError(emailInput, emailErrorMsg);
-        removeError(passwordInput, passwordErrorMsg);
         // Update type
         if (authType === SIGN_IN) {
-            setAuthType(REGISTRATION);
+            navigate('/register');
         } else {
-            updateLabelStyling(nameLabel, true);
-            setAuthType(SIGN_IN);
+            navigate('/login');
         }
     };
 

@@ -26,8 +26,8 @@ const Home = ({ user, signOutUser, updateUser }) => {
         if (user) {
             getUserTasks(user._id);
         } else {
-            // Redirect user to auth page if they are not signed in
-            navigate('/auth');
+            // Redirect user to login page if they are not signed in
+            navigate('/login');
         }
     }, [user, navigate]);
 

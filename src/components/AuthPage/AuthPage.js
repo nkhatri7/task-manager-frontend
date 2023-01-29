@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthForm from '../../components/AuthForm/AuthForm';
-import './Auth.scss';
+import AuthForm from '../AuthForm/AuthForm';
+import './AuthPage.scss';
 
-const Auth = ({ user, updateUser }) => {
+const AuthPage = ({ user, updateUser, authType }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,10 +17,10 @@ const Auth = ({ user, updateUser }) => {
         <main className="auth-main">
             <h1 className="auth-heading">Taskr</h1>
             <section className="auth-card">
-                <AuthForm updateUser={updateUser} />
+                <AuthForm updateUser={updateUser} authType={authType} />
             </section>
         </main>
     );
 };
 
-export default Auth;
+export default AuthPage;

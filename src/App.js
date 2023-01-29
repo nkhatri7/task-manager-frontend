@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/api.utils';
 import useDetectTheme from './hooks/useDetectTheme';
-import Auth from './routes/Auth/Auth';
+import Login from './routes/Login/Login';
+import Register from './routes/Register/Register';
 import Home from './routes/Home/Home';
 import './App.scss';
 
@@ -40,7 +41,8 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home user={user} signOutUser={signOutUser} updateUser={getActiveUser} />} />
-                <Route path='/auth' element={<Auth user={user} updateUser={getActiveUser} />} />
+                <Route path='/login' element={<Login user={user} updateUser={getActiveUser} />} />
+                <Route path='/register' element={<Register user={user} updateUser={getActiveUser} />} />
             </Routes>
         </BrowserRouter>
     );
