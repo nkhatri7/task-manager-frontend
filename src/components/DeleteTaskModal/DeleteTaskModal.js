@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../utils/api.utils';
 import './DeleteTaskModal.scss';
 
 const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
@@ -7,7 +8,7 @@ const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
      * Deletes the task.
      */
     const deleteTask = () => {
-        axios.delete(`http://localhost:8080/api/v1/tasks/${task._id}`)
+        axios.delete(`${API_BASE_URL}/api/v1//tasks/${task._id}`)
             .then(res => handleTaskDeletionSuccess())
             .catch(err => console.log(err));
     };

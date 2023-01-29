@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './PasswordVisibilityToggle.scss';
-
 import { ReactComponent as EyeOpenIcon } from '../../assets/eye-open.svg';
 import { ReactComponent as EyeClosedIcon } from '../../assets/eye-closed.svg';
+import './PasswordVisibilityToggle.scss';
 
 const PasswordVisibilityToggle = ({ value, inputRef }) => {
     const [isPasswordVisibile, setPasswordVisible] = useState(false);

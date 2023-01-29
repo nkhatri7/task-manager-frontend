@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Task.scss';
-
+import { displayDueDate, checkIfTaskIsOverdue } from '../../utils/date.utils';
 import TaskCheckbox from '../TaskCheckbox/TaskCheckbox';
 import EditTask from '../EditTask/EditTask';
 import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
 import { ReactComponent as EditIcon } from '../../assets/pencil.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/bin.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
-
-import { displayDueDate, checkIfTaskIsOverdue } from '../../utils/date.utils';
+import './Task.scss';
 
 const Task = ({ task, updateUser, openTaskModal }) => {
     const [editMode, setEditMode] = useState(false);

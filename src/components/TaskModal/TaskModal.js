@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './TaskModal.scss';
-
+import { formatDate, parseDate, displayDueDate } from '../../utils/date.utils';
+import { API_BASE_URL } from '../../utils/api.utils';
 import TaskCheckbox from '../TaskCheckbox/TaskCheckbox';
 import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
 import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
-import { ReactComponent as CloseIcon } from '../../assets/x-mark.svg';
-
-import { formatDate, parseDate, displayDueDate } from '../../utils/date.utils';
 import ModalEditText from '../ModalEditText/ModalEditText';
+import { ReactComponent as CloseIcon } from '../../assets/x-mark.svg';
+import './TaskModal.scss';
 
 const TaskModal = ({ task, handleClose, updateUser }) => {
     const [date, setDate] = useState(
@@ -26,7 +25,7 @@ const TaskModal = ({ task, handleClose, updateUser }) => {
         const data = {
             dueDate: date ? formatDate(date) : '',
         };
-        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
+        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
             .then(res => updateUser(task.userId))
             .catch(err => console.log(err));
     };

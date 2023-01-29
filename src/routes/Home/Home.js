@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import './Home.scss';
-
+import { checkIfTaskIsOverdue } from '../../utils/date.utils';
+import { API_BASE_URL } from '../../utils/api.utils';
 import Menu from '../../components/Menu/Menu';
 import NewTask from '../../components/NewTask/NewTask';
 import Task from '../../components/Task/Task';
 import TaskModal from '../../components/TaskModal/TaskModal';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
-
-import { checkIfTaskIsOverdue } from '../../utils/date.utils';
+import './Home.scss';
 
 const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
@@ -48,7 +47,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
      * @param {string} userId The active user's ID
      */
     const getUserTasks = (userId) => {
-        axios.get(`http://localhost:8080/api/v1/tasks/user/${userId}`)
+        axios.get(`${API_BASE_URL}/api/v1/tasks/user/${userId}`)
             .then(res => setTasks(res.data))
             .catch(err => console.log(err));
     };

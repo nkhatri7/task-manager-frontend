@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Menu.scss';
-
 import { ReactComponent as ProfileIcon } from '../../assets/user.svg';
 import { ReactComponent as PasswordIcon } from '../../assets/lock.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/sign-out.svg';
+import './Menu.scss';
 
 const Menu = ({ user, signOutUser }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);

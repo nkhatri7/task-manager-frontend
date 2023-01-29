@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './EditTask.scss';
-
-import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
-
+import { formatDate, parseDate } from '../../utils/date.utils';
+import { API_BASE_URL } from '../../utils/api.utils';
 import useAutosizeTextArea from '../../hooks/useAutosizeTextArea';
 import useInputAutoFocus from '../../hooks/useInputAutoFocus';
-import { formatDate, parseDate } from '../../utils/date.utils';
+import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
+import './EditTask.scss';
 
 const EditTask = ({ task, handleClose, updateUser }) => {
     const [text, setText] = useState(task ? task.text : '');
@@ -61,7 +60,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
      */
     const saveEdit = () => {
         const data = getTaskData();
-        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
+        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
             .then(res => handleSaveSuccess())
             .catch(err => console.log(err));
     };
@@ -81,7 +80,7 @@ const EditTask = ({ task, handleClose, updateUser }) => {
     const createTask = () => {
         const data = getTaskData();
         data.userId = localStorage.getItem('taskr-user');
-        axios.post('http://localhost:8080/api/v1/tasks/', data)
+        axios.post(`${API_BASE_URL}/api/v1/tasks/`, data)
             .then(res => handleTaskCreationSuccess(res))
             .catch(err => console.log(err));
     };

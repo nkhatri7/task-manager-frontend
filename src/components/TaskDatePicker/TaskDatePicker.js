@@ -1,8 +1,7 @@
 import React from 'react';
-import './TaskDatePicker.scss';
-
 import { DatePicker } from 'react-widgets/cjs';
 import 'react-widgets/scss/styles.scss';
+import './TaskDatePicker.scss';
 
 const TaskDatePicker = ({ date, updateDate }) => {
     return (

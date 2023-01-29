@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../utils/api.utils';
 import './TaskCheckbox.scss';
 
 const TaskCheckbox = ({ task, updateUser, src }) => {
@@ -20,7 +21,7 @@ const TaskCheckbox = ({ task, updateUser, src }) => {
         const data = {
             completed: e.target.checked,
         };
-        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
+        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
             .then(res => updateUser(task.userId))
             .catch(err => console.log(err));
     };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './ThemeToggle.scss';
-
 import { ReactComponent as SunIcon } from '../../assets/sun.svg';
 import { ReactComponent as MoonIcon } from '../../assets/moon.svg';
+import './ThemeToggle.scss';
 
 const LIGHT = 'light';
 const DARK = 'dark';

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './NewTask.scss';
-
 import EditTask from '../EditTask/EditTask';
 import { ReactComponent as PlusIcon } from '../../assets/plus-sign.svg';
+import './NewTask.scss';
 
 const NewTask = ({ updateUser }) => {
     const [editMode, setEditMode] = useState(false);

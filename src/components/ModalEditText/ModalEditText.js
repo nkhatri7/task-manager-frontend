@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './ModalEditText.scss';
-
+import { API_BASE_URL } from '../../utils/api.utils';
 import useAutosizeTextArea from '../../hooks/useAutosizeTextArea';
 import useInputAutoFocus from '../../hooks/useInputAutoFocus';
+import './ModalEditText.scss';
 
 const ModalEditText = ({ task, handleClose, updateUser }) => {
     const [text, setText] = useState(task.text);
@@ -33,7 +33,7 @@ const ModalEditText = ({ task, handleClose, updateUser }) => {
         const data = {
             text: text.trim(),
         };
-        axios.patch(`http://localhost:8080/api/v1/tasks/${task._id}`, data)
+        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
             .then(res => handleSaveSuccess())
             .catch(err => console.log(err));
     };

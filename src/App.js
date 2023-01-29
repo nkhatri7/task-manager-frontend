@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import './App.scss';
-
+import { API_BASE_URL } from './utils/api.utils';
 import useDetectTheme from './hooks/useDetectTheme';
-
 import Auth from './routes/Auth/Auth';
 import Home from './routes/Home/Home';
+import './App.scss';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -24,7 +23,7 @@ const App = () => {
      * @param {String} userId The user ID for the active user
      */
     const getActiveUser = (userId) => {
-        axios.get(`http://localhost:8080/api/v1/users/${userId}`)
+        axios.get(`${API_BASE_URL}/api/v1/users/${userId}`)
             .then((res) => setUser(res.data))
             .catch((err) => console.log(err));
     };

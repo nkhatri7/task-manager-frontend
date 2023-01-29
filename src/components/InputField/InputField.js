@@ -1,7 +1,6 @@
 import React from 'react';
-import './InputField.scss';
-
 import PasswordVisibilityToggle from '../PasswordVisibilityToggle/PasswordVisibilityToggle';
+import './InputField.scss';
 
 const InputField = ({ 
     type, 

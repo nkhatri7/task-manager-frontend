@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AuthForm.scss';
-
 import { 
     updateLabelStyling, 
     displayError, 
     removeError, 
 } from '../../utils/input.utils';
 import { validateEmail, validatePassword } from '../../utils/auth.utils';
-
+import { API_BASE_URL } from '../../utils/api.utils';
 import InputField from '../InputField/InputField';
+import './AuthForm.scss';
 
 const SIGN_IN = 'Sign In';
 const REGISTRATION = 'Registration';
@@ -132,7 +131,7 @@ const AuthForm = ({ updateUser }) => {
             email: email,
             password: password,
         }
-        axios.post('http://localhost:8080/api/v1/auth/login', data)
+        axios.post(`${API_BASE_URL}/api/v1/auth/login`, data)
             .then((res) => handleAuthSuccess(res))
             .catch((err) => handleSignInError(err));
     };
@@ -166,7 +165,7 @@ const AuthForm = ({ updateUser }) => {
             email: email,
             password: password,
         };
-        axios.post('http://localhost:8080/api/v1/auth/register', data)
+        axios.post(`${API_BASE_URL}/api/v1/auth/register`, data)
             .then((res) => handleAuthSuccess(res))
             .catch((err) => handleRegistrationError(err));
     };
