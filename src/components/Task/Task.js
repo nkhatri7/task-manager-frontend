@@ -90,7 +90,7 @@ const Task = ({ task, updateUser, openTaskModal }) => {
                             <TaskCheckbox task={task} updateUser={updateUser} />
                             <p className={`task-text${task.completed ? ' task-text-completed' : ''}`}>{task.text}</p>
                         </section>
-                        <section className="task-section">
+                        <section className="task-section task-action-btns">
                             {task.completed ? null : 
                                 <button className="task-btn task-edit-btn" aria-label='Edit Task' 
                                         onClick={displayEditMode}>

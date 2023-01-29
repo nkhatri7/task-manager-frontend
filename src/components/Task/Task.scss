@@ -11,6 +11,7 @@
 }
 
 .task {
+    position: relative;
     @include g.flex-column();
     justify-content: center;
     width: 100%;
@@ -45,7 +46,6 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
-        display: none;
         &:not(:last-child) {
             margin-right: 5px;
         }
@@ -78,9 +78,21 @@
             color: var(--grey-text);
         }
     }
-    @media screen and (min-width: 1440px) {
-        &:hover .task-btn {
-            display: block;
+
+    .task-action-btns {
+        position: absolute;
+        display: none !important;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        height: 100%;
+        z-index: 2;
+        background-color: var(--component-bg);
+        padding-left: 10px;
+    }
+    @media screen and (min-width: 1280px) {
+        &:hover .task-action-btns {
+            display: flex !important;
             animation: task-action-btn-opacity 0.3s;
         }
     }
