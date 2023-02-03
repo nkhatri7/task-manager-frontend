@@ -139,7 +139,10 @@ const Home = ({ user, updateUser }) => {
         } else if (tasksFilter === COMPLETED) {
             return tasks.filter(task => task.completed);
         } else {
-            return tasks.reverse();
+            // Show uncompleted tasks before completed tasks
+            const uncompletedTasks = tasks.filter(task => !task.completed);
+            const completedTasks = tasks.filter(task => task.completed);
+            return completedTasks.concat(uncompletedTasks);
         }
     };
 
