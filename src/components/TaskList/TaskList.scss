@@ -1,0 +1,8 @@
+.tasks-container {
+    width: 100%;
+    max-width: 600px;
+    > .no-tasks-msg {
+        color: var(--text-color);
+        text-align: center;
+    }
+}

@@ -30,38 +30,5 @@
             color: var(--grey-text);
             margin-top: 15px;
         }
-        > .tasks-filters-container {
-            margin: 30px 0 20px 0;
-            @include g.flex-centre();
-            width: 100%;
-            max-width: 600px;
-            background-color: var(--component-bg);
-            border-radius: 10px;
-            > .tasks-filter {
-                padding: 10px 0;
-                flex: 1;
-                text-align: center;
-                color: var(--text-color);
-                font-size: 13px;
-                border-radius: 10px;
-                cursor: pointer;
-                &.active-tasks-filter {
-                    background-color: var(--accent-green);
-                    color: var(--green-btn-text);
-                    font-weight: 700;
-                }
-                @media screen and (min-width: 1440px) {
-                    font-size: 15px;
-                }
-            }
-        }
-        > .tasks-container {
-            width: 100%;
-            max-width: 600px;
-            > .no-tasks-msg {
-                color: var(--text-color);
-                text-align: center;
-            }
-        }
     }
 }
