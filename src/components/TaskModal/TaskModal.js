@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { formatDate, parseDate, displayDueDate } from '../../utils/date.utils';
 import { API_BASE_URL } from '../../utils/api.utils';
+import { getRequestHeader } from '../../utils/auth.utils';
 import TaskCheckbox from '../TaskCheckbox/TaskCheckbox';
 import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
 import DeleteTaskModal from '../DeleteTaskModal/DeleteTaskModal';
@@ -25,8 +26,9 @@ const TaskModal = ({ task, handleClose, updateUser }) => {
         const data = {
             dueDate: date ? formatDate(date) : '',
         };
-        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
-            .then(res => updateUser(task.userId))
+        const url = `${API_BASE_URL}/api/v1/tasks/${task._id}`;
+        axios.patch(url, data, getRequestHeader())
+            .then(res => updateUser())
             .catch(err => console.log(err));
     };
 

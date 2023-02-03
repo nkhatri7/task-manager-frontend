@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { checkIfTaskIsOverdue } from '../../utils/date.utils';
 import { API_BASE_URL } from '../../utils/api.utils';
+import { getRequestHeader } from '../../utils/auth.utils';
 import Menu from '../../components/Menu/Menu';
 import NewTask from '../../components/NewTask/NewTask';
 import Task from '../../components/Task/Task';
@@ -14,7 +15,7 @@ const UNCOMPLETED = 'Uncompleted';
 const COMPLETED = 'Completed';
 const NO_FILTER = 'No Filter';
 
-const Home = ({ user, signOutUser, updateUser }) => {
+const Home = ({ user, updateUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
     const [selectedTask, setSelectedTask] = useState(null);
@@ -24,7 +25,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
 
     useEffect(() => {
         if (user) {
-            getUserTasks(user._id);
+            getUserTasks();
         } else {
             // Redirect user to login page if they are not signed in
             navigate('/login');
@@ -44,10 +45,9 @@ const Home = ({ user, signOutUser, updateUser }) => {
     /**
      * Uses the taskr API to fetch the active user's tasks and updates the tasks
      * state.
-     * @param {string} userId The active user's ID
      */
-    const getUserTasks = (userId) => {
-        axios.get(`${API_BASE_URL}/api/v1/tasks/user/${userId}`)
+    const getUserTasks = () => {
+        axios.get(`${API_BASE_URL}/api/v1/tasks/user/`, getRequestHeader())
             .then(res => setTasks(res.data))
             .catch(err => console.log(err));
     };
@@ -192,7 +192,7 @@ const Home = ({ user, signOutUser, updateUser }) => {
                 </section>
                 <section className="header-section">
                     <ThemeToggle />
-                    <Menu user={user} signOutUser={signOutUser} />
+                    <Menu user={user} updateUser={updateUser} />
                 </section>
             </header>
             <main>

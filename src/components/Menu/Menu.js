@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { API_BASE_URL } from '../../utils/api.utils';
+import { removeCookie, getRequestHeader } from '../../utils/auth.utils';
 import { ReactComponent as ProfileIcon } from '../../assets/user.svg';
 import { ReactComponent as PasswordIcon } from '../../assets/lock.svg';
 import { ReactComponent as SignOutIcon } from '../../assets/sign-out.svg';
 import './Menu.scss';
 
-const Menu = ({ user, signOutUser }) => {
+const Menu = ({ user, updateUser }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     /**
@@ -22,6 +25,26 @@ const Menu = ({ user, signOutUser }) => {
      */
     const toggleMenu = () => {
         setMenuOpen(prev => !prev);
+    };
+
+    /**
+     * Uses the taskr API to close the user's session.
+     */
+    const signOutUser = () => {
+        const url = `${API_BASE_URL}/api/v1/auth/sign-out`;
+        axios.delete(url, getRequestHeader())
+            .then((res) => resetUserData())
+            .catch((err) => console.log(err));
+    };
+
+    /**
+     * Removes the session ID and session hash cookies and sets the user state
+     * to `null`.
+     */
+    const resetUserData = () => {
+        removeCookie('SID');
+        removeCookie('HSID');
+        updateUser();
     };
 
     return (

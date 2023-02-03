@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { formatDate, parseDate } from '../../utils/date.utils';
 import { API_BASE_URL } from '../../utils/api.utils';
+import { getRequestHeader } from '../../utils/auth.utils';
 import useAutosizeTextArea from '../../hooks/useAutosizeTextArea';
 import useInputAutoFocus from '../../hooks/useInputAutoFocus';
 import TaskDatePicker from '../TaskDatePicker/TaskDatePicker';
@@ -60,18 +61,10 @@ const EditTask = ({ task, handleClose, updateUser }) => {
      */
     const saveEdit = () => {
         const data = getTaskData();
-        axios.patch(`${API_BASE_URL}/api/v1/tasks/${task._id}`, data)
-            .then(res => handleSaveSuccess())
+        const url = `${API_BASE_URL}/api/v1/tasks/${task._id}`;
+        axios.patch(url, data, getRequestHeader())
+            .then(res => handleTaskRequestSuccess())
             .catch(err => console.log(err));
-    };
-
-    /**
-     * Goes back to the default task view and updates the user state in the
-     * application.
-     */
-    const handleSaveSuccess = () => {
-        handleClose();
-        updateUser(task.userId);
     };
 
     /**
@@ -79,20 +72,18 @@ const EditTask = ({ task, handleClose, updateUser }) => {
      */
     const createTask = () => {
         const data = getTaskData();
-        data.userId = localStorage.getItem('taskr-user');
-        axios.post(`${API_BASE_URL}/api/v1/tasks/`, data)
-            .then(res => handleTaskCreationSuccess(res))
+        axios.post(`${API_BASE_URL}/api/v1/tasks/`, data, getRequestHeader())
+            .then(res => handleTaskRequestSuccess())
             .catch(err => console.log(err));
     };
 
     /**
      * Goes back to the default home page view and updates the user state in the
      * application.
-     * @param {AxiosResponse<any, any>} res Response from the API
      */
-    const handleTaskCreationSuccess = (res) => {
+    const handleTaskRequestSuccess = () => {
         handleClose();
-        updateUser(res.data.user._id);
+        updateUser();
     };
 
     /**

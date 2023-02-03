@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/api.utils';
+import { getRequestHeader } from '../../utils/auth.utils';
 import './DeleteTaskModal.scss';
 
 const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
@@ -8,7 +9,8 @@ const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
      * Deletes the task.
      */
     const deleteTask = () => {
-        axios.delete(`${API_BASE_URL}/api/v1//tasks/${task._id}`)
+        const url = `${API_BASE_URL}/api/v1/tasks/${task._id}`;
+        axios.delete(url, getRequestHeader())
             .then(res => handleTaskDeletionSuccess())
             .catch(err => console.log(err));
     };
@@ -19,7 +21,7 @@ const DeleteTaskModal = ({ task, closeModal, updateUser, closeSrc }) => {
      */
     const handleTaskDeletionSuccess = () => {
         closeModal();
-        updateUser(task.userId);
+        updateUser();
         if (closeSrc) {
             closeSrc();
         }

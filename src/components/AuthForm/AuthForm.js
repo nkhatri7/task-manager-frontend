@@ -6,7 +6,7 @@ import {
     displayError, 
     removeError, 
 } from '../../utils/input.utils';
-import { validateEmail, validatePassword } from '../../utils/auth.utils';
+import { storeSessionData, validatePassword } from '../../utils/auth.utils';
 import { API_BASE_URL } from '../../utils/api.utils';
 import InputField from '../InputField/InputField';
 import './AuthForm.scss';
@@ -84,28 +84,22 @@ const AuthForm = ({ updateUser, authType }) => {
     };
 
     /**
-     * Checks if the email and password inputs are valid.
-     * @returns {boolean} `true` if both inputs are valid and `false` if at 
-     * least one input is not valid.
-     */
-    const validateInput = () => {
-        return validateEmail(email, emailInput, emailErrorMsg) 
-            && validatePassword(password, passwordInput, passwordErrorMsg);
-    };
-
-    /**
      * Prevents default form submission functionality and handles validations.
      * @param {Event} e Form submission event
      */
     const handleAuthRequest = (e) => {
         e.preventDefault();
-        const isInputValid = validateInput();
-        if (isInputValid) {
+        const isPasswordValid = validatePassword(password);
+        if (isPasswordValid) {
+            removeError(passwordInput, passwordErrorMsg);
             if (authType === SIGN_IN) {
                 signInUser();
             } else {
                 registerUser();
             }
+        } else {
+            const errorMsg = 'Password must be at least 8 characters long.';
+            displayError(errorMsg, passwordInput, passwordErrorMsg);
         }
     };
 
@@ -174,11 +168,10 @@ const AuthForm = ({ updateUser, authType }) => {
         if (res.status === 200 || res.status === 201) {
             removeError(emailInput, emailErrorMsg);
             removeError(passwordInput, passwordErrorMsg);
-            // Update user ID in local storage
-            localStorage.setItem('taskr-user', res.data._id);
-            updateUser(res.data._id);
-            // Go to home page
-            navigate('/');
+            // Create cookies to store session ID and session hash
+            const { sessionId, sessionHash } = res.data.session;
+            storeSessionData(sessionId, sessionHash);
+            updateUser();
         }
     };
 
