@@ -19,7 +19,7 @@ const Home = ({ user, updateUser }) => {
     const [tasks, setTasks] = useState([]);
     const [tasksFilter, setTasksFilter] = useState(UNCOMPLETED);
     const [selectedTask, setSelectedTask] = useState(null);
-    const [isTaskModalOpen, setTaskModalOpen] = useState(false);
+    const [showTaskModal, setShowTaskModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -67,14 +67,14 @@ const Home = ({ user, updateUser }) => {
      */
     const openTaskModal = (task) => {
         setSelectedTask(task);
-        setTaskModalOpen(true);
+        setShowTaskModal(true);
     };
 
     /**
      * Closes the detailed view of the selected task.
      */
     const closeTaskModal = () => {
-        setTaskModalOpen(false);
+        setShowTaskModal(false);
         setSelectedTask(null);
     };
 
@@ -102,10 +102,7 @@ const Home = ({ user, updateUser }) => {
                     updateUser={updateUser} 
                     openTaskModal={openTaskModal} 
                 />
-                {isTaskModalOpen ? 
-                    <TaskModal task={selectedTask} handleClose={closeTaskModal} updateUser={updateUser} /> 
-                    : null
-                }
+                {showTaskModal && <TaskModal task={selectedTask} handleClose={closeTaskModal} updateUser={updateUser}/>}
             </main>
         </div>
     );

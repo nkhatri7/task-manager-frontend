@@ -8,7 +8,6 @@ const InputField = ({
     value, 
     onChange, 
     label, 
-    hasError,
     inputRef, 
     labelRef,
     errorRef,
@@ -30,10 +29,9 @@ const InputField = ({
                     {label}
                 </label>
                 {/* Show password visibility toggle if the type is a password field */}
-                {type === 'password' ? <PasswordVisibilityToggle value={value} inputRef={inputRef} /> : null}
+                {type === 'password' && <PasswordVisibilityToggle value={value} inputRef={inputRef} />}
             </div>
-            {/* Some input fields may not require error messages */}
-            {hasError ? <span className="input-error-msg" ref={errorRef}></span> : null}
+            <span className="input-error-msg" ref={errorRef}></span>
         </div>
     );
 };

@@ -83,8 +83,18 @@ const getRequestHeader = () => {
  * @returns {boolean} 
  * `true` if the password is at least 8 characters long, and `false` if not.
  */
-const validatePassword = (password, inputRef, errorRef) => {
+const validatePassword = (password) => {
     return password.trim().length >= 8;
+};
+
+/**
+ * Checks if the name is 30 characters or less.
+ * @param {string} name The name to be validated
+ * @returns {boolean} 
+ * `true` if the name is 30 characters or less and `false` if it isn't.
+ */
+const validateName = (name) => {
+    return name.trim().length <= 30;
 };
 
 export {
@@ -94,4 +104,5 @@ export {
     removeCookie,
     getRequestHeader,
     validatePassword,
+    validateName,
 };

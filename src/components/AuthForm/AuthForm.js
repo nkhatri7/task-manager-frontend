@@ -6,7 +6,11 @@ import {
     displayError, 
     removeError, 
 } from '../../utils/input.utils';
-import { storeSessionData, validatePassword } from '../../utils/auth.utils';
+import { 
+    storeSessionData, 
+    validatePassword, 
+    validateName,
+} from '../../utils/auth.utils';
 import { API_BASE_URL } from '../../utils/api.utils';
 import InputField from '../InputField/InputField';
 import './AuthForm.scss';
@@ -22,6 +26,7 @@ const AuthForm = ({ updateUser, authType }) => {
 
     const nameInput = useRef(null);
     const nameLabel = useRef(null);
+    const nameErrorMsg = useRef(null);
     const emailInput = useRef(null);
     const emailLabel = useRef(null);
     const emailErrorMsg = useRef(null);
@@ -84,23 +89,61 @@ const AuthForm = ({ updateUser, authType }) => {
     };
 
     /**
-     * Prevents default form submission functionality and handles validations.
+     * Validates user input for a sign in request.
      * @param {Event} e Form submission event
      */
-    const handleAuthRequest = (e) => {
+    const handleSignInRequest = (e) => {
         e.preventDefault();
+        const isPasswordValid = handlePasswordValidation();
+        if (isPasswordValid) {
+            signInUser();
+        }
+    };
+
+    /**
+     * Validates user input for a registration request.
+     * @param {Event} e Form submission event
+     */
+    const handleRegistrationRequest = (e) => {
+        e.preventDefault();
+        const isNameValid = handleNameValidation();
+        const isPasswordValid = handlePasswordValidation();
+        if (isNameValid && isPasswordValid) {
+            registerUser();
+        }
+    };
+
+    /**
+     * Checks if the name is valid (30 characters or less) and displays or hides
+     * error messages based on if it is valid.
+     * @returns {boolean} `true` if the name is valid and `false` if it is not.
+     */
+    const handleNameValidation = () => {
+        const isNameValid = validateName(name.trim());
+        if (isNameValid) {
+            removeError(nameInput, nameErrorMsg);
+        } else {
+            const errorMsg = 'Name must be 30 characters or less.';
+            displayError(errorMsg, nameInput, nameErrorMsg);
+        }
+        return isNameValid;
+    };
+
+    /**
+     * Checks if the password is valid (8 characters or more) and displays or
+     * hides error messages based on if it is valid.
+     * @returns {boolean} 
+     * `true` if the password is valid and `false` if it is not.
+     */
+    const handlePasswordValidation = () => {
         const isPasswordValid = validatePassword(password);
         if (isPasswordValid) {
             removeError(passwordInput, passwordErrorMsg);
-            if (authType === SIGN_IN) {
-                signInUser();
-            } else {
-                registerUser();
-            }
         } else {
             const errorMsg = 'Password must be at least 8 characters long.';
             displayError(errorMsg, passwordInput, passwordErrorMsg);
         }
+        return isPasswordValid;
     };
 
     /**
@@ -176,19 +219,16 @@ const AuthForm = ({ updateUser, authType }) => {
     };
 
     return (
-        <form onSubmit={handleAuthRequest} className="auth-form">
+        <form onSubmit={authType === SIGN_IN ? handleSignInRequest : handleRegistrationRequest} className="auth-form">
             <h2 className='auth-form-heading'>{authType === SIGN_IN ? 'Sign In' : 'Create Account'}</h2>
-            {authType === REGISTRATION ? 
-                <InputField type='name' inputId='name' value={name} onChange={handleNameChange} label='Name'
-                    inputRef={nameInput} labelRef={nameLabel} hasError={false} />
-                : null
-            }
+                {authType === REGISTRATION && 
+                    <InputField type='name' inputId='name' value={name} onChange={handleNameChange} label='Name'
+                        inputRef={nameInput} labelRef={nameLabel} errorRef={nameErrorMsg} />
+                }
                 <InputField type='email' inputId='email' value={email} onChange={handleEmailChange} 
-                    label='Email Address' inputRef={emailInput} labelRef={emailLabel} hasError={true}
-                    errorRef={emailErrorMsg} />
+                    label='Email Address' inputRef={emailInput} labelRef={emailLabel} errorRef={emailErrorMsg} />
                 <InputField type='password' inputId='password' value={password} onChange={handlePasswordChange}
-                    label='Password' inputRef={passwordInput} labelRef={passwordLabel} hasError={true}
-                    errorRef={passwordErrorMsg} />
+                    label='Password' inputRef={passwordInput} labelRef={passwordLabel} errorRef={passwordErrorMsg} />
             <input 
                 type="submit" 
                 value={authType === SIGN_IN ? 'Sign In' : 'Create Account'} 
