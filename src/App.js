@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/api.utils';
-import { getCookieValue, getRequestHeader } from './utils/auth.utils';
+import { 
+    getCookieValue, 
+    storeSessionData, 
+    getRequestHeader, 
+} from './utils/auth.utils';
 import useDetectTheme from './hooks/useDetectTheme';
 import Login from './routes/Login/Login';
 import Register from './routes/Register/Register';
@@ -18,6 +22,9 @@ const App = () => {
         const sessionHash = getCookieValue('HSID');
         if (sessionId && sessionHash) {
             getActiveUser();
+            // Update the expiration date of the cookies for the session ID
+            // and session hash to extend session every time page is loaded
+            storeSessionData(sessionId, sessionHash);
         }
     }, []);
 
